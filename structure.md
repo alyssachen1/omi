@@ -31,3 +31,12 @@ omi-hackathon/
 ├── .env                        
 ├── package.json                
 └── README.md                   
+
+
+# i think we should be able to generate a new person in the data base (that you can look in whatever) and analyze them
+# but also you should be able to add in and upload new data on top of existing data and re-analyze
+# we can also rate how good the conversation is -> and give pointers & insights
+# based off an algorithm if can quantify how good the convo is and give suggestions for next time
+
+
+# networking assistant and tracker
