@@ -18,8 +18,8 @@ setup
 
 plan
 
-[] tommy setups up the omi and gets some test data for aly
-[] aly just uses her SUPER AWESOME !!! data sci skill to sort and outupt ton of charts and cool data + ai chatgpt shit! color theory!
-[] tommy hooks up the memory / db part
-[] we can call and connect everyhting together
-[] record demo!
+- [] tommy setups up the omi and gets some test data for aly
+- [] aly just uses her SUPER AWESOME !!! data sci skill to sort and outupt ton of charts and cool data + ai chatgpt shit! color theory!
+- [] tommy hooks up the memory / db part
+- [] we can call and connect everyhting together
+- [] record demo!
