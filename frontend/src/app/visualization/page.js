@@ -16,6 +16,7 @@ import {
 import { PolarArea, Bubble } from 'react-chartjs-2';
 import { createRoot } from 'react-dom/client';
 import { Poppins, Inter } from 'next/font/google';
+import { FloatingBubbles } from "@/components/ui/floating-bubbles";
 
 ChartJS.register(
   RadialLinearScale,
@@ -26,12 +27,6 @@ ChartJS.register(
   Legend,
   LinearScale
 );
-
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
 
 const inter = Inter({
   subsets: ['latin'],
@@ -405,7 +400,7 @@ export default function AnimatedTooltipPreview() {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                      r: {  // 'r' is for radial scale
+                      r: {  
                         max: 70,
                         beginAtZero: true,
                       }
@@ -480,6 +475,8 @@ export default function AnimatedTooltipPreview() {
           </div>
         )}
       </main>
+
+      <FloatingBubbles />
     </div>
   );
 }

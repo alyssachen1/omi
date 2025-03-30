@@ -1,33 +1,34 @@
 "use client";
 
 import React from "react";
-import { Vortex } from "../components/ui/vortex";
 import Link from "next/link";
+import { FloatingBubbles } from "../components/ui/floating-bubbles";
 
-export default function VortexDemo() {
+export default function Homepage() {
   return (
-    <div className="w-screen h-screen overflow-hidden">
-      <Vortex
-        backgroundColor="black"
-        className="flex items-center flex-col justify-center px-4 md:px-10 w-full h-full"
-      >
-        <h2 className="text-white text-2xl md:text-6xl font-bold text-center">
+    <div className="w-screen h-screen overflow-hidden relative">
+      <FloatingBubbles />
+      <div className="absolute inset-0 flex items-center flex-col justify-center px-4 md:px-10 w-full h-full z-10">
+        <h2 className="text-black text-2xl md:text-6xl font-bold text-center">
           The Color Theory
         </h2>
-        <p className="text-white text-sm md:text-2xl max-w-xl mt-6 text-center">
+        <p className="text-black text-sm md:text-2xl max-w-xl mt-6 text-center">
           Who are you talking to, how can you improve, what should you say?
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
+          <button 
+            className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
+            style={{ backgroundColor: 'rgba(75, 192, 192, 0.5)' }}
+          >
             Sync Omi
           </button>
           <Link href="/visualization">
-            <button className="px-4 py-2 text-white hover:bg-white/10 rounded-lg transition duration-200">
+            <button className="px-4 py-2 text-black hover:bg-white/10 rounded-lg transition duration-200">
               Visualize
             </button>
           </Link>
         </div>
-      </Vortex>
+      </div>
     </div>
   );
 }
