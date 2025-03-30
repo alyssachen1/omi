@@ -1,0 +1,31 @@
+# COLOR: Orange
+# HEX: #FFA500, #FED8B1, #FFAE42, #FF9F00, #F58025, #FF6700
+
+[EMOTIONS]
+["Enthusiasm", "Adventure", "Creativity", "Warmth", "Energy", "Excitement", "Optimism", "Exhibitionism"]
+
+[EFFECTS]
+["Stimulates Energy", "Encourages Socialization", "Enhances Mental Activity", "Increases Appetite", "Promotes Warmth", "Draws Attention", "Indicates Caution", "Elicits Cheerfulness"]
+
+[POSITIVE_TRAITS]
+["Enthusiastic", "Adventurous", "Creative", "Warm", "Optimistic", "Sociable", "Energetic", "Tolerant", "Open-Minded", "Good-Natured", "Extroverted", "Assertive", "Determined"]
+
+[NEGATIVE_TRAITS]
+["Superficial", "Impatient", "Egoistic", "Aloof", "Self-Centered", "Unpredictable", "Inconsistent", "Flamboyant", "Overbearing", "Insensitive", "Exhibitionist"]
+
+[RELATED_KEYWORDS]
+["Adventure", "Spontaneity", "Dynamism", "Exhibitionism", "Superficiality", "Vitality", "Change", "Harvest", "Autumn", "Warmth", "Energy", "Caution", "Creativity", "Optimism", "Sociability"]
+
+[DESCRIPTION]
+Orange is a vibrant and energetic color associated with enthusiasm, adventure, and creativity. It embodies warmth and excitement, often linked to socialization and optimism. Individuals with an orange personality are typically extroverted, adventurous, and creative, thriving in dynamic environments and seeking new experiences. They are warm, good-natured, and their enthusiasm is contagious. However, they may also exhibit negative traits such as superficiality, impatience, and egoism. Orange personalities value social interaction and are often seen as the life of the party, but their need for excitement can sometimes lead to inconsistency and unpredictability.
+
+[IF_FAVORITE_COLOR]
+- You are enthusiastic and full of energy, embracing life with optimism.
+- You have a strong desire for adventure and new experiences.
+- You are sociable and enjoy being around people, often becoming the center of attention.
+- You are creative and enjoy expressing yourself in various ways.
+- You may be impatient and seek constant stimulation, sometimes leading to superficiality.
+- You value freedom and dislike being tied down, which can affect your relationships.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-orange-personality/

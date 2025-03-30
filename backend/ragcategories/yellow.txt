@@ -1,0 +1,35 @@
+# COLOR: Yellow
+# HEX: #FFFDD0, #FCE883, #FFEF00, #FFDF00, #EED202
+
+[EMOTIONS]
+["Happiness", "Optimism", "Creativity", "Intellect", "Playfulness", "Excitement", "Mental Clarity", "Curiosity"]
+
+[EFFECTS]
+["Inspires Communication", "Energizes", "Sharpens Memory", "Stimulates Mental Activity", "Encourages Learning", "Boosts Mood", "Draws Attention", "Promotes Alertness"]
+
+[POSITIVE_TRAITS]
+["Joyful", "Enthusiastic", "Communicative", "Original", "Cheerful", "Upbeat", "Curious", "Sociable", "Clever", "Bright", "Optimistic", "Energetic", "Analytical"]
+
+[NEGATIVE_TRAITS]
+["Cowardly", "Fearful", "Impatient", "Overcritical", "Jealous", "Nervous", "Impulsive", "Insecure", "Anxious", "Betraying"]
+
+[RELATED_KEYWORDS]
+["Sunlight", "Energy", "Communication", "Intelligence", "Warmth", "Brightness", "Mental Stimulation", "Youthfulness", "Ideas", "Clarity", "Warning", "Cheer", "Vibrance"]
+
+[DESCRIPTION]
+Yellow is the color of happiness, optimism, creativity, and intellect. It is bright and cheerful, known to stimulate mental activity, sharpen memory, and energize the spirit. Yellow inspires communication and encourages playfulness, curiosity, and learning. It’s a mentally activating hue associated with innovative thinking and mental clarity.
+
+However, yellow also carries intense emotional and psychological influence. When overused, it can induce anxiety, impatience, and nervousness. It may cause people to become overcritical or overwhelmed. Yellow is linked to fear, betrayal, cowardice, and impulsiveness, reflecting the color’s potential to stimulate discomfort as much as joy.
+
+Yellow is often used as a highlight or attention-getter rather than a base tone. Its association with sunshine and brightness makes it uplifting and eye-catching—but its power can be overwhelming without balance.
+
+[IF_FAVORITE_COLOR]
+- You are likely a cheerful and curious person who values creativity and intellect.
+- You are enthusiastic, communicative, and full of original ideas.
+- You seek mental stimulation and enjoy learning and sharing knowledge.
+- You may be easily excited but also prone to impatience or nervous energy.
+- You enjoy socializing and thrive in upbeat, lively environments.
+- You can become overcritical or insecure if under pressure or overwhelmed.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-yellow-personality/

@@ -1,0 +1,31 @@
+# COLOR: Pink
+# HEX: #FFC0CB, #FE3EA1, #FB0081, #FF1493, #F51579
+
+[EMOTIONS]
+["Love", "Romance", "Compassion", "Kindness", "Nurturing", "Femininity", "Sweetness", "Optimism"]
+
+[EFFECTS]
+["Calms", "Soothes", "Promotes Affection", "Encourages Kindness", "Evokes Warmth", "Inspires Hope", "Reduces Aggression", "Induces Nostalgia"]
+
+[POSITIVE_TRAITS]
+["Loving", "Kind", "Generous", "Romantic", "Approachable", "Optimistic", "Caring", "Compassionate", "Sensitive", "Charming", "Youthful", "Affectionate", "Gentle", "Empathetic"]
+
+[NEGATIVE_TRAITS]
+["Immature", "Naive", "Overly Sensitive", "Overly Optimistic", "Lacking Confidence", "Needy", "Overly Emotional", "Overly Trusting", "Vulnerable", "Attention-Seeking"]
+
+[RELATED_KEYWORDS]
+["Love", "Romance", "Compassion", "Kindness", "Nurturing", "Femininity", "Sweetness", "Optimism", "Affection", "Tenderness", "Innocence", "Playfulness", "Warmth", "Softness", "Friendship"]
+
+[DESCRIPTION]
+Pink is a color that embodies love, compassion, and nurturing. It combines the passion and energy of red with the purity and innocence of white, resulting in a hue that is both gentle and affectionate. Pink is often associated with femininity, sweetness, and romance, evoking feelings of warmth and comfort. Individuals with a pink personality are typically loving, kind, and generous, often putting the needs of others before their own. They are approachable and have a charming, youthful demeanor that draws people in. However, they may also exhibit traits of immaturity and naivety, sometimes viewing the world through rose-colored glasses. Their desire for unconditional love and acceptance can lead to disappointment if not reciprocated. While their optimism and sensitivity are strengths, they should be mindful of becoming overly dependent on others for validation.
+
+[IF_FAVORITE_COLOR]
+- You are loving and compassionate, always ready to help those in need.
+- You have a romantic and approachable nature that attracts others to you.
+- You prefer a small, close-knit group of friends and value deep connections.
+- You may have a tendency to be naive or overly optimistic, sometimes overlooking the flaws in others.
+- Learning to love and appreciate yourself is an important journey for you.
+- You seek unconditional love and may feel disappointed when your affection is not returned in kind.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-pink-personality/

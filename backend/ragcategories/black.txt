@@ -1,0 +1,31 @@
+# COLOR: Black
+# HEX: #000000, #010101, #020002, #2C2C2C, #171717
+
+[EMOTIONS]
+["Mystery", "Elegance", "Power", "Authority", "Sophistication", "Rebellion", "Sadness", "Fear"]
+
+[EFFECTS]
+["Creates a Sense of Mystery", "Conveys Authority", "Provides Protection", "Elicits Fear", "Induces Sadness", "Enhances Sophistication", "Symbolizes Mourning", "Suggests Power"]
+
+[POSITIVE_TRAITS]
+["Conservative", "Sophisticated", "Independent", "Determined", "Polite", "Proper", "Mysterious", "Authoritative", "Emotionally Controlled"]
+
+[NEGATIVE_TRAITS]
+["Insecure", "Intimidating", "Authoritarian", "Emotionless", "Vulnerable", "Rebellious", "Suppressive", "Isolated", "Pessimistic"]
+
+[RELATED_KEYWORDS]
+["Mystery", "Elegance", "Power", "Authority", "Sophistication", "Rebellion", "Sadness", "Fear", "Protection", "Control", "Mourning", "Darkness", "Formality", "Strength", "Secrecy"]
+
+[DESCRIPTION]
+Black is a color often associated with mystery, elegance, and power. It conveys authority and sophistication, making it a popular choice in fashion and design. Individuals with a black personality are typically conservative, independent, and determined, often striving for control and creating an aura of mystery. They may appear emotionless and intimidating, using black as a protective barrier to hide vulnerabilities and insecurities. While black can symbolize strength and authority, it is also linked to negative aspects such as fear, sadness, and rebellion. Excessive use of black may indicate a desire to retreat and hide from the world, suppressing joy and pleasure.
+
+[IF_FAVORITE_COLOR]
+- You are conventional and conservative, often proper and polite.
+- You strive for power and control, valuing independence and self-sufficiency.
+- You may appear emotionless or intimidating, creating an aura of mystery.
+- Deep down, you might feel insecure and use black as a protective barrier.
+- You have a sophisticated taste and appreciate elegance in various aspects of life.
+- You may be going through a phase of self-denial or seeking protection from negative energies.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-black-personality/

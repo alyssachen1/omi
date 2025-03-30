@@ -1,0 +1,38 @@
+# COLOR: Blue
+# HEX: ["#ADD8E6", "#00B7EB", "#2374AB", "#304D6D", "#022F40"]
+# WAVELENGTH: "~510–450 nm"
+
+[EMOTIONS]
+["Trust", "Responsibility", "Loyalty", "Authority", "Emotional Sensitivity", "Balance", "Friendship", "Serenity"]
+
+[EFFECTS]
+["Calming", "Relaxing", "Creates Order", "Cognitive Enhancer", "Soothing", "Reduces Anxiety", "Promotes Focus", "Suppresses Appetite", "Suppresses Melatonin"]
+
+[POSITIVE_TRAITS]
+["Honest", "Committed", "Serene", "Peaceful", "Friendly", "Reliable", "Authoritative", "Sincere", "Calm", "Responsible", "Loyal", "Supportive", "Helpful", "Faithful", "Balanced", "Communicative", "Good Listener", "Trustworthy", "Organized", "Thoughtful"]
+
+[NEGATIVE_TRAITS]
+["Fragile", "Depressive", "Conservative", "Predictable", "Stubborn", "Rigid", "Overly Dependent", "Overwhelmed", "Cold", "Impersonal", "Nostalgic", "Resistant to Change"]
+
+[RELATED_KEYWORDS]
+["Stability", "Harmony", "Trust", "Friendship", "Order", "Calmness", "Serenity", "Faithfulness", "Tradition", "Control", "Routine", "Listening", "Balance", "Consistency", "Security"]
+
+[DESCRIPTION]
+Blue is the most universally appealing color on the spectrum due to its non-polarizing traits. It is calming, relaxing, and offers a sense of peace, serenity, and emotional stability. Blue symbolizes trust, responsibility, and loyalty, while also conveying authority and structure. 
+
+Those with a blue personality are often honest, committed, and supportive individuals who value friendship and strive for balance in their lives. They are dependable and emotionally aware, seeking order and harmony in both relationships and environments. Blue personalities are deeply affected by chaos or betrayal and may feel overwhelmed or nostalgic when stability is disrupted.
+
+On the downside, they can be conservative, predictable, and resistant to change. While generally warm and caring, their emphasis on control and structure can also make them come across as rigid or emotionally distant.
+
+Too much exposure to blue may suppress appetite and melatonin. Though rare in nature, blue is tied closely to elements like the sky and sea, both of which contribute to its widespread associations with depth, openness, and tranquility.
+
+[IF_FAVORITE_COLOR]
+- You are an honest person that values friendship and strives for balance.
+- You are loyal, supportive, and find fulfillment in helping others.
+- You enjoy structure and calm environments.
+- You may be conservative and cautious about change.
+- You are likely dependable, emotionally aware, and seek peace in your life.
+- You often put others before yourself, and feel hurt when your trust is broken.
+
+[LINK]
+https://www.colorsexplained.com/color-blue-meaning-of-the-color-blue/

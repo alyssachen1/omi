@@ -1,0 +1,36 @@
+# COLOR: Purple
+# HEX: Various (#D998D5, #BB6AB6, #AC5EB6, #AD34D5, #7B21AB)
+
+[EMOTIONS]
+["Spirituality", "Imagination", "Royalty", "Mystery", "Emotional Stability"]
+
+[EFFECTS]
+["Encourages", "Uplifts", "Inspires Wisdom", "Enlightens", "Evokes Devotion", "Deepens Understanding", "Stimulates Creativity", "Supports Self-Knowledge"]
+
+[POSITIVE_TRAITS]
+["Creative", "Imaginative", "Compassionate", "Dreamer", "Visionary", "Wise", "Intuitive", "Charismatic", "Authentic", "Supportive", "Independent", "Humanitarian", "Spiritual", "Idealistic", "Sensitive", "Introverted"]
+
+[NEGATIVE_TRAITS]
+["Immature", "Arrogant", "Emotional", "Moody", "Overly Vigilant", "Conceited", "Overwhelmed", "Hypersensitive", "Self-Important", "Unconventional"]
+
+[RELATED_KEYWORDS]
+["Mystery", "Royalty", "Wisdom", "Emotion", "Psychic", "Balance", "Harmony", "Devotion", "Femininity", "Individuality", "Meditation", "Vision", "Rose-Colored Glasses", "Artistic", "Uncommon", "Occult"]
+
+[DESCRIPTION]
+Purple is a rare and powerful color often associated with spirituality, imagination, royalty, and mystery. Becuase the color purple has always been rare in nature, purple things used to be considered royal. It combines the energy of red with the calmness of blue, creating a personality that is creative, sensitive, and wise. Purple personalities are charismatic, introverted, and visionary, often pursuing humanitarian causes and artistic passions. However, their emotional depth can lead to hypersensitivity, arrogance, or moodiness. The color also represents a longing for emotional stability, personal authenticity, and self-knowledge.
+
+People who favor purple tend to be unique, intuitive, and connected to spiritual growth, sometimes drawn to the mystical or occult. They may struggle with immaturity or feeling misunderstood due to their abstract thinking and idealism, yet they bring compassion and creativity to those around them.
+
+Additionally, purple is the combination between warm red and cool blue tones-- therefore, it retains properies of both colors. Purple is a secondary color that is complementary to yellow, according to the CMYK color model. On the other hand, it is complementary to green according to the RGB color model.
+
+
+[IF_FAVORITE_COLOR]
+- You are likely a creative dreamer with a vivid imagination.
+- You seek emotional balance and harmony.
+- You are introverted but deeply compassionate.
+- You value authenticity, individuality, and self-expression.
+- You may be drawn to the mystical or unconventional.
+- Others may perceive you as charismatic, eccentric, or even arrogant.
+
+[LINK]
+https://www.colorsexplained.com/color-purple-meaning-of-the-color-purple/

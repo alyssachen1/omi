@@ -1,0 +1,31 @@
+# COLOR: Red
+# HEX: #FF0000, #E60000, #CC0000, #B30000, #990000
+
+[EMOTIONS]
+["Passion", "Energy", "Excitement", "Love", "Courage", "Aggression", "Determination", "Impulsiveness"]
+
+[EFFECTS]
+["Stimulates Appetite", "Increases Heart Rate", "Enhances Metabolism", "Draws Attention", "Signals Danger", "Encourages Action"]
+
+[POSITIVE_TRAITS]
+["Energetic", "Passionate", "Ambitious", "Courageous", "Optimistic", "Extroverted", "Enthusiastic", "Confident", "Determined", "Action-Oriented", "Adventurous"]
+
+[NEGATIVE_TRAITS]
+["Impulsive", "Aggressive", "Short-Tempered", "Overconfident", "Restless", "Dominating", "Impatient", "Confrontational", "Insensitive"]
+
+[RELATED_KEYWORDS]
+["Power", "Love", "War", "Survival", "Vitality", "Strength", "Desire", "Intensity", "Leadership", "Boldness", "Excitement", "Danger", "Alertness", "Romance", "Competition"]
+
+[DESCRIPTION]
+Red is a powerful and dynamic color associated with passion, energy, and action. It embodies both love and war, symbolizing strong emotions and survival instincts. Individuals with a red personality are often energetic, ambitious, and enthusiastic, thriving in competitive environments and seeking physical fulfillment. They are natural leaders who are not afraid to voice their opinions and take risks. However, their impulsive nature can lead to aggression and impatience. Red's stimulating effects can increase heart rate and metabolism, drawing attention and encouraging action. While it can signify danger, it also represents courage and determination.
+
+[IF_FAVORITE_COLOR]
+- You are energetic and passionate, embracing life with enthusiasm.
+- You possess a strong desire for physical fulfillment and are not afraid to pursue your desires.
+- You are ambitious and competitive, always striving to be the best.
+- You are courageous and willing to take risks to achieve your goals.
+- You may be impulsive and quick-tempered but also quick to forgive.
+- You enjoy being the center of attention and have a contagious zest for life.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-red-personality/

@@ -1,0 +1,33 @@
+# COLOR: White
+# HEX: #FDF6FD, #FAFAFA, #F9F6F5, #F8F8FF, #F1FAE5
+
+[EMOTIONS]
+["Purity", "Virtue", "Innocence", "Delicacy", "Simplicity", "Serenity", "Peace", "Neutrality"]
+
+[EFFECTS]
+["Calms", "Balances", "Purifies", "Brings Clarity", "Declutters the Mind", "Symbolizes New Beginnings", "Instills Peace"]
+
+[POSITIVE_TRAITS]
+["Clean", "Elegant", "Simple", "Virtuous", "Organized", "Thoughtful", "Optimistic", "Self-Sufficient", "Good-Intentioned"]
+
+[NEGATIVE_TRAITS]
+["Bland", "Unfriendly", "Empty", "Cold", "Isolated", "Rigid", "Emotionally Detached"]
+
+[RELATED_KEYWORDS]
+["Purity", "Innocence", "Fresh Start", "Clean Slate", "Clarity", "Minimalism", "Neutrality", "Perfection", "Serenity", "Simplicity", "Mental Organization", "Quietness", "Peace"]
+
+[DESCRIPTION]
+White is the color of purity, serenity, and new beginnings. As the lightest and most neutral of all colors, it brings a sense of peace, calm, and mental clarity. It is often associated with cleanliness, simplicity, and perfection, making it a symbol of goodness and fresh starts. People with a white personality are elegant, organized, and optimistic, valuing structure, virtue, and a calm environment.
+
+However, white can also be seen as cold, bland, or emotionally distant. Its association with emptiness and sterility may suggest emotional detachment or isolation. While it is uplifting and brings mental organization, overuse of white may lead to a lack of warmth or a perception of unfriendliness.
+
+[IF_FAVORITE_COLOR]
+- You are likely calm, composed, and deeply value cleanliness and organization.
+- You seek clarity, both in thought and surroundings.
+- You enjoy simplicity and avoid drama or clutter—mentally or physically.
+- You are optimistic and strive to be virtuous and fair.
+- You may sometimes come across as emotionally reserved or distant.
+- You are seen as elegant and reliable, often maintaining a sense of peace around you.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-white-personality/

@@ -1,0 +1,31 @@
+# COLOR: Green
+# HEX: #00FF00, #32CD32, #228B22, #006400, #ADFF2F
+
+[EMOTIONS]
+["Balance", "Growth", "Harmony", "Renewal", "Peace", "Generosity", "Envy", "Materialism"]
+
+[EFFECTS]
+["Soothes", "Relaxes", "Restores Energy", "Promotes Harmony", "Encourages Growth", "Balances Emotions", "Enhances Stability"]
+
+[POSITIVE_TRAITS]
+["Diplomatic", "Peaceful", "Generous", "Caring", "Practical", "Loyal", "Faithful", "Gentle", "Forward-Thinking", "Observant", "Community-Oriented", "Good Listener"]
+
+[NEGATIVE_TRAITS]
+["Anxious", "Self-Righteous", "Envious", "Jealous", "Materialistic", "Possessive", "Moody", "Overly Judgemental", "Gossipy"]
+
+[RELATED_KEYWORDS]
+["Nature", "Growth", "Balance", "Harmony", "Renewal", "Stability", "Prosperity", "Health", "Wealth", "Jealousy", "Envy", "Generosity", "Community", "Peace", "Materialism"]
+
+[DESCRIPTION]
+Green is the color of nature, symbolizing growth, balance, and renewal. It embodies harmony and stability, often associated with health, prosperity, and generosity. Individuals with a green personality are diplomatic, peaceful, and caring, striving to bring harmony to their communities. They are practical and down-to-earth, with a strong sense of loyalty and a desire to belong. However, they may also exhibit negative traits such as envy, materialism, and possessiveness. Green personalities value balance and peace, often focusing on the future and making mindful decisions. They are generous and caring but should be cautious not to neglect themselves while taking care of others. Their need to belong can sometimes lead to self-righteousness or jealousy if they feel unacknowledged.
+
+[IF_FAVORITE_COLOR]
+- You are a peaceful and diplomatic person who enjoys bringing harmony to your community.
+- You have a well-developed sense of right and wrong and make mindful decisions.
+- You need to belong to a community and value love and acknowledgment from others.
+- You are practical, down-to-earth, and generous, often putting others' needs before your own.
+- You may have a tendency towards materialism, enjoying high-quality and expensive possessions.
+- Be mindful of becoming possessive, moody, or overly judgmental, especially when stressed.
+
+[LINK]
+https://www.colorsexplained.com/favorite-color-green-personality/
