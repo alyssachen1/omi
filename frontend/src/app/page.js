@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Vortex } from "../components/ui/vortex";
+import Link from "next/link";
 
 export default function VortexDemo() {
   return (
@@ -20,7 +21,11 @@ export default function VortexDemo() {
           <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 transition duration-200 rounded-lg text-white shadow-[0px_2px_0px_0px_#FFFFFF40_inset]">
             Sync Omi
           </button>
-          <button className="px-4 py-2 text-white">Visualize</button>
+          <Link href="/visualization">
+            <button className="px-4 py-2 text-white hover:bg-white/10 rounded-lg transition duration-200">
+              Visualize
+            </button>
+          </Link>
         </div>
       </Vortex>
     </div>
