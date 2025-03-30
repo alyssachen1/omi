@@ -1,13 +1,20 @@
 "use client";
-import Image from "next/image";
 import React, { useState } from "react";
+import { Inter } from 'next/font/google';
 import {
   motion,
   useTransform,
   AnimatePresence,
   useMotionValue,
   useSpring,
-} from "framer-motion"; // changed from motion/react to framer-motion
+} from "framer-motion";
+
+const inter = Inter({
+  subsets: ['latin'],
+  weight: ['300', '400'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+});
 
 export const AnimatedTooltip = ({
   items,
@@ -19,16 +26,27 @@ export const AnimatedTooltip = ({
   const rotate = useSpring(useTransform(x, [-100, 100], [-45, 45]), springConfig);
   const translateX = useSpring(useTransform(x, [-100, 100], [-50, 50]), springConfig);
   
-  const handleMouseMove = (event) => {
-    const halfWidth = event.target.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
+  const getColorStyle = (suggestedColor) => {
+    const colors = {
+      Yellow: 'rgba(255, 206, 86, 0.5)',  
+      Blue: 'rgba(54, 162, 235, 0.5)',    
+      Red: 'rgba(255, 99, 132, 0.5)',     
+      Green: 'rgba(75, 192, 192, 0.5)'    
+    };
+    return colors[suggestedColor] || 'rgba(200, 200, 200, 0.5)'; 
   };
 
+  // FF = 100% opacity
+    // CC = 80% opacity
+    // 80 = 50% opacity
+    // 40 = 25% opacity
+
+
   return (
-    <div className="flex flex-row gap-2">
-      {items.map((item, idx) => (
+    <div className="flex flex-row gap-4">
+      {items.map((item) => (
         <div
-          className="group relative -mr-4 cursor-pointer"
+          className="group relative cursor-pointer"
           key={item.name}
           onMouseEnter={() => setHoveredIndex(item.id)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -63,14 +81,20 @@ export const AnimatedTooltip = ({
               </motion.div>
             )}
           </AnimatePresence>
-          <Image
-            onMouseMove={handleMouseMove}
-            height={100}
-            width={100}
-            src={item.image}
-            alt={item.name}
-            className="relative !m-0 h-14 w-14 rounded-full border-2 border-white object-cover object-top !p-0 transition duration-500 group-hover:z-30 group-hover:scale-105"
-          />
+          <div 
+            className="relative flex items-center justify-center h-16 w-16 rounded-full transition duration-500 group-hover:scale-105"
+            style={{ 
+              backgroundColor: getColorStyle(item.suggested_color),
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <span 
+              className={`${inter.className} text-sm font-light text-white/100`}
+              style={{ fontStyle: 'italic' }}
+            >
+              {item.name}
+            </span>
+          </div>
         </div>
       ))}
     </div>

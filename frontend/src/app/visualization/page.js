@@ -51,8 +51,7 @@ const people = [
     },
     pos_traits: ["Happiness", "Optimism", "Creativity"],
     neg_traits: [],
-    keywords: ["energy", "communication"],
-    image: "https://pbs.twimg.com/profile_images/1894709078330322944/Dc1WAF-s_400x400.jpg"
+    keywords: ["energy", "communication", "happiness"],
   },
   {
     id: 2,
@@ -66,8 +65,7 @@ const people = [
     },
     pos_traits: ["Calm", "Growth", "Balance"],
     neg_traits: [],
-    keywords: ["nature", "harmony"],
-    image: "https://pbs.twimg.com/profile_images/1879245793313673216/H20toOUD_400x400.png"
+    keywords: ["harmony"],
   },
   {
     id: 3,
@@ -82,7 +80,6 @@ const people = [
     pos_traits: ["Leadership", "Action", "Confidence"],
     neg_traits: [],
     keywords: ["power", "drive"],
-    image: "https://pbs.twimg.com/profile_images/1409195680229429254/4XOS0l45_400x400.jpg"
   },
   {
     id: 4,
@@ -97,7 +94,6 @@ const people = [
     pos_traits: ["Trust", "Depth", "Loyalty"],
     neg_traits: [],
     keywords: ["stability", "peace"],
-    image: "https://pbs.twimg.com/profile_images/1645585472457158656/Uc-J3XQT_400x400.jpg"
   }
 ];
 
@@ -106,7 +102,7 @@ const polarData = {
   datasets: [{
     label: 'Color Distribution',
     data: people
-      .filter(p => p.color_matches) // Only include people with color_matches ?
+      .filter(p => p.color_matches) // do we only include people with color_matches ?
       .map(p => [
         p.color_matches.Yellow || 0,
         p.color_matches.Blue || 0,
@@ -115,7 +111,7 @@ const polarData = {
       ])
       .reduce(
         (acc, curr) => curr.map((num, idx) => (acc[idx] || 0) + num),
-        [0, 0, 0, 0] // Initial values
+        [0, 0, 0, 0] 
       ),
     backgroundColor: [
       'rgba(255, 206, 86, 0.5)', 
