@@ -1,0 +1,91 @@
+{
+  "id": "60c1e529-915c-4228-be58-0ab24ac9caa7",
+  "created_at": "2025-03-31T04:58:44.261209+00:00",
+  "started_at": "2025-03-31T04:58:44.261209+00:00",
+  "finished_at": "2025-03-31T04:59:52.396854+00:00",
+  "source": "omi",
+  "language": "en",
+  "structured": {
+    "title": "Building a Decision Tree for Titanic Dataset",
+    "overview": "The conversation discusses building a decision tree model using a Titanic dataset to predict passenger survival. The process involves asking yes/no questions about passenger attributes such as ticket price and class to build a logical tree. The conversation highlights the use of simple arithmetic and logic without advanced algorithms to split data effectively, starting with passenger class as the primary split.",
+    "emoji": "\ud83c\udf33",
+    "category": "education",
+    "action_items": [],
+    "events": []
+  },
+  "transcript_segments": [
+    {
+      "text": "by asking a series of yes and no questions, because by whether someone survived. For example, let's take miss Elizabeth Bonnell. As simple as",
+      "speaker": "SPEAKER_1",
+      "speaker_id": 1,
+      "is_user": false,
+      "person_id": null,
+      "start": 0.0,
+      "end": 8.449999999999989
+    },
+    {
+      "text": "pounds",
+      "speaker": "SPEAKER_0",
+      "speaker_id": 0,
+      "is_user": false,
+      "person_id": null,
+      "start": 11.969979999999964,
+      "end": 12.279999999999973
+    },
+    {
+      "text": "for her ticket? Yes. She did. So we go",
+      "speaker": "SPEAKER_1",
+      "speaker_id": 1,
+      "is_user": false,
+      "person_id": null,
+      "start": 12.600019999999972,
+      "end": 14.600019999999972
+    },
+    {
+      "text": "left.",
+      "speaker": "SPEAKER_0",
+      "speaker_id": 0,
+      "is_user": false,
+      "person_id": null,
+      "start": 14.600019999999972,
+      "end": 14.990000000000009
+    },
+    {
+      "text": "Next question. Was she in first class? Yes. Again, at this point, I tree confidently predicts that she survived because, well, she actually did. And we can use this tree again and again to predict other passengers. This is really a simple tree, but this is what I got when training a Titanic dataset. And you might be asking, how do we build this huge tree? Well, this is the coolest part. We don't need any fancy algorithm like with neural nets. No matrix multiplication. Gradient descent, none of that fancy crap. Just some logic and some simple arithmetic. Here's how this works. First, we grab all the Titanic data and start with an empty tree. Now our goal is to find the variable that best splits the passenger. Into survivors and non survivors. Turns out that the most",
+      "speaker": "SPEAKER_1",
+      "speaker_id": 1,
+      "is_user": false,
+      "person_id": null,
+      "start": 15.229999999999961,
+      "end": 59.69999999999999
+    },
+    {
+      "text": "powerful",
+      "speaker": "SPEAKER_0",
+      "speaker_id": 0,
+      "is_user": false,
+      "person_id": null,
+      "start": 59.69999999999999,
+      "end": 60.14999999999998
+    },
+    {
+      "text": "first split is passenger class. Alright. So we split data. 1st class passengers go one way, and everyone else",
+      "speaker": "SPEAKER_1",
+      "speaker_id": 1,
+      "is_user": false,
+      "person_id": null,
+      "start": 61.50999999999999,
+      "end": 67.06
+    }
+  ],
+  "geolocation": null,
+  "photos": [],
+  "plugins_results": [],
+  "external_data": null,
+  "app_id": null,
+  "discarded": false,
+  "deleted": false,
+  "visibility": "private",
+  "processing_memory_id": null,
+  "status": "completed"
+}
