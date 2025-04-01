@@ -23,7 +23,7 @@ export default function RootLayout({ children }) {
             <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 relative flex items-center">
               <Link
                 href="/"
-                className="text-gray-800 hover:text-gray-600 transition-colors absolute left-4"
+                className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0"
               >
                 ← Back to Homepage
               </Link>
