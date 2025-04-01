@@ -43,7 +43,7 @@ export const TimelineChart = ({ person }) => {
   }
 
   const sortedInteractions = [...person.interactions]
-    .filter(i => i && i.date && i.dominantColor)
+    .filter(i => i && i.date && (i.wordCount !== undefined))
     .sort((a, b) => new Date(a.date) - new Date(b.date));
 
   if (sortedInteractions.length === 0) {
@@ -58,34 +58,27 @@ export const TimelineChart = ({ person }) => {
         const chart = context.chart;
         const {ctx, chartArea} = chart;
         
-        if (!chartArea || sortedInteractions.length < 2) {
-          return colorMap[sortedInteractions[0].dominantColor] || colorMap.Gray;
-        }
+        if (!chartArea) return colorMap[person.suggested_color];
 
-        try {
-          const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
-          
-          if (sortedInteractions.length === 1) {
-            const color = colorMap[sortedInteractions[0].dominantColor] || colorMap.Gray;
-            gradient.addColorStop(0, color);
-            gradient.addColorStop(1, color);
-            return gradient;
-          }
-
+        const gradient = ctx.createLinearGradient(chartArea.left, 0, chartArea.right, 0);
+        
+        if (sortedInteractions.length === 1) {
+          const color = colorMap[sortedInteractions[0].dominantColor] || colorMap[person.suggested_color];
+          gradient.addColorStop(0, color);
+          gradient.addColorStop(1, color);
+        } else {
           sortedInteractions.forEach((interaction, index) => {
-            const position = index / (sortedInteractions.length - 1);
-            const color = colorMap[interaction.dominantColor] || colorMap.Gray;
-            gradient.addColorStop(position, color);
+            gradient.addColorStop(
+              index / (sortedInteractions.length - 1),
+              colorMap[interaction.dominantColor] || colorMap[person.suggested_color]
+            );
           });
-          
-          return gradient;
-        } catch (error) {
-          console.warn('Gradient creation failed:', error);
-          return colorMap[sortedInteractions[0].dominantColor] || colorMap.Gray;
         }
+        
+        return gradient;
       },
       backgroundColor: sortedInteractions.map(i => 
-        colorMap[i.dominantColor] || colorMap.Gray
+        colorMap[i.dominantColor] || colorMap[person.suggested_color]
       ),
       pointRadius: 8,
       pointHoverRadius: 12,
@@ -99,7 +92,6 @@ export const TimelineChart = ({ person }) => {
     scales: {
       x: {
         type: 'category',
-        min: sortedInteractions[0].date,
         offset: true,
         ticks: {
           padding: 10
@@ -109,22 +101,15 @@ export const TimelineChart = ({ person }) => {
         },
         bounds: 'ticks',
         padding: {
-          left: 20,
-          right: 20
+          left: 50
         }
       },
       y: {
+        beginAtZero: true,
         title: {
           display: true,
           text: 'Words per Interaction'
-        },
-        beginAtZero: true
-      }
-    },
-    layout: {
-      padding: {
-        left: 20,
-        right: 20
+        }
       }
     },
     plugins: {
@@ -138,7 +123,7 @@ export const TimelineChart = ({ person }) => {
             return [
               `Date: ${interaction.date}`,
               `Words: ${interaction.wordCount}`,
-              `Dominant Color: ${interaction.dominantColor || 'Not specified'}`
+              `Dominant Color: ${interaction.dominantColor || person.suggested_color}`
             ];
           }
         }
@@ -148,7 +133,7 @@ export const TimelineChart = ({ person }) => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div style={{ height: '300px', width: '100%' }}>
       <Line data={data} options={options} />
     </div>
   );
