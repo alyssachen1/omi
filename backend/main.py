@@ -23,7 +23,7 @@ def process_with_chatgpt(title: str, overview: str, transcript: str) -> dict:
     try:
         prompt = f"""
 
-        Please analyze this transcript and identify the names and people who are talking and then 
+        Please analyze this transcript and identify the names of each specific speaker in the trasncript.
 
         Title: {title}
         Overview: {overview}
