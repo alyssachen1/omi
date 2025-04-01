@@ -213,10 +213,11 @@ const TableWithButton = () => {
                     : "-"}
                 </td>
                 <td className="px-2 py-2 border">
-                  {item.ai_analysis ? (
+                  {item.ai_analysis != "{}" && item.ai_analysis ? (
                     item.ai_analysis
                   ) : (
                     <button
+                      disabled
                       onClick={() => handleAnalyze(item)}
                       className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                     >
