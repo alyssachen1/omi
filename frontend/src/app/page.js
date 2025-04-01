@@ -17,18 +17,20 @@ export default function Homepage() {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <button
-            className="px-6 py-2 text-sm font-medium rounded-md transition-opacity opacity-90 hover:opacity-100 w-32 h-10 flex items-center justify-center relative overflow-hidden"
-            style={{ backgroundColor: "black" }}
+            className="px-6 py-2 text-sm font-medium rounded-md bg-black text-white border border-black transition-colors hover:bg-transparent hover:text-black hover:border-black"
           >
-            <span className="mix-blend-difference text-white">Sync Omi</span>
+            Sync Omi
           </button>
+
           <Link href="/memories">
-            <button className="px-6 py-2 text-black hover:bg-white/10 rounded-md transition duration-200 border-2 border-black/100 w-32 h-10 flex items-center justify-center">
+            <button className="px-6 py-2 text-sm font-medium text-black bg-transparent border border-black rounded-md transition-colors hover:bg-black hover:text-white hover:border-transparent">
               Memories
             </button>
           </Link>
+
+
         </div>
       </div>
-    </div>
+    </div >
   );
 }
