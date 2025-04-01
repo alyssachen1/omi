@@ -15,13 +15,13 @@ const colorMap = {
 
 const ColorDescription = ({ color }) => {
   const descriptions = {
-    Yellow: `Yellow is the color of happiness, optimism, creativity, and intellect. Yellow inspires communication and encourages playfulness, curiosity, and learning. It's a mentally activating hue associated with innovative thinking and mental clarity.`, 
+    Yellow: `Yellow is the color of happiness, optimism, creativity, and intellect. Yellow inspires communication and encourages playfulness, curiosity, and learning. It's a mentally activating hue associated with innovative thinking and mental clarity.`,
 
     Blue: `Those with a blue personality are often honest, committed, and supportive individuals who value friendship and strive for balance in their lives. They are dependable and emotionally aware, seeking order and harmony in both relationships and environments. Blue personalities are deeply affected by chaos or betrayal and may feel overwhelmed or nostalgic when stability is disrupted.
 
     On the downside, they can be conservative, predictable, and resistant to change.`,
 
-    Black: `Black is a color often associated with mystery, elegance, and power. Individuals with a black personality are typically conservative, independent, and determined, often striving for control and creating an aura of mystery. They may appear emotionless and intimidating, using black as a protective barrier to hide vulnerabilities and insecurities.`, 
+    Black: `Black is a color often associated with mystery, elegance, and power. Individuals with a black personality are typically conservative, independent, and determined, often striving for control and creating an aura of mystery. They may appear emotionless and intimidating, using black as a protective barrier to hide vulnerabilities and insecurities.`,
 
     Green: `Green embodies harmony and stability, often associated with health, prosperity, and generosity. Individuals with a green personality are diplomatic, peaceful, and caring, striving to bring harmony to their communities. They are practical and down-to-earth, with a strong sense of loyalty and a desire to belong. However, they may also exhibit negative traits such as envy, materialism, and possessiveness. Green personalities value balance and peace, often focusing on the future and making mindful decisions. They are generous and caring but should be cautious not to neglect themselves while taking care of others. Their need to belong can sometimes lead to self-righteousness or jealousy if they feel unacknowledged.`,
 
@@ -50,21 +50,26 @@ export const PersonalityCard = ({ person }) => {
   const backgroundColor = baseColor.replace('0.5', '0.3');
 
   return (
-    <div 
+    <div
       className="h-[500px] rounded-lg p-6 shadow-lg overflow-y-auto"
       style={{
         backgroundColor: backgroundColor,
         backdropFilter: 'blur(8px)',
       }}
     >
-      <h2 className="text-xl font-bold mb-4">{person.name}</h2>
-      
+      <h2 className="text-3xl font-bold mb-6">
+        {person.name.charAt(0).toUpperCase() + person.name.slice(1)}
+      </h2>
+
       {/* Positive Traits */}
       <div className="mb-4">
         <h3 className="font-semibold mb-2">Positive Traits</h3>
         <div className="flex flex-wrap gap-2">
           {person.pos_traits.map((trait, index) => (
-            <span key={index} className="px-2 py-1 bg-white/50 rounded-full text-sm">
+            <span
+              key={index}
+              className="px-3 py-2 bg-white/50 rounded-full text-base transition-colors duration-300 hover:bg-black hover:text-white"
+            >
               {trait}
             </span>
           ))}
@@ -76,7 +81,10 @@ export const PersonalityCard = ({ person }) => {
         <h3 className="font-semibold mb-2">Negative Traits</h3>
         <div className="flex flex-wrap gap-2">
           {person.neg_traits.map((trait, index) => (
-            <span key={index} className="px-2 py-1 bg-white/50 rounded-full text-sm">
+            <span
+              key={index}
+              className="px-3 py-2 bg-white/50 rounded-full text-base transition-colors duration-300 hover:bg-black hover:text-white"
+            >
               {trait}
             </span>
           ))}
