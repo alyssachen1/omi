@@ -20,6 +20,8 @@ import { FloatingBubbles } from "@/components/ui/floating-bubbles";
 import { TimelineChart } from "@/components/ui/timeline-chart";
 import { Inter } from "next/font/google";
 import { PersonalityCard } from "@/components/ui/personality-card";
+import { motion } from "framer-motion";
+
 
 ChartJS.register(
   RadialLinearScale,
@@ -424,11 +426,11 @@ export default function AnimatedTooltipPreview() {
         label: "Color Distribution",
         data: person
           ? [
-              person.color_matches.Yellow || 0,
-              person.color_matches.Blue || 0,
-              person.color_matches.Red || 0,
-              person.color_matches.Green || 0,
-            ]
+            person.color_matches.Yellow || 0,
+            person.color_matches.Blue || 0,
+            person.color_matches.Red || 0,
+            person.color_matches.Green || 0,
+          ]
           : [0, 0, 0, 0],
         backgroundColor: [
           "rgba(255, 206, 86, 0.5)", // yellow
@@ -517,11 +519,13 @@ export default function AnimatedTooltipPreview() {
 
         <div className="grid grid-cols-2 gap-8 mb-8">
           {selectedPerson && (
-            <PersonalityCard person={selectedPerson} />
+            <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
+              <PersonalityCard person={selectedPerson} />
+            </motion.div>
           )}
 
           {selectedPerson && (
-            <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col">
+            <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col card transition-transform duration-200 hover:scale-105">
               <h2 className="text-xl font-semibold mb-4 text-center">Color Traits Map</h2>
               <div className="flex gap-2 mb-4 justify-center">
                 <button
@@ -568,7 +572,7 @@ export default function AnimatedTooltipPreview() {
                         bodyFont: {
                           size: 14
                         },
-                        displayColors: false,  // Removes the color box in the tooltip
+                        displayColors: false,
                       },
                     },
                   }}
@@ -582,7 +586,7 @@ export default function AnimatedTooltipPreview() {
         {/* Personality Card and Polar Chart */}
         {selectedPerson && (
           <div className="grid grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col">
+            <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col transition-transform duration-200 hover:scale-105">
               <h2 className="text-xl font-semibold mb-4 text-center">Interaction Timeline</h2>
               <div className="flex-1 flex items-center justify-center">
                 {selectedPerson && <TimelineChart person={selectedPerson} />}
@@ -590,7 +594,7 @@ export default function AnimatedTooltipPreview() {
             </div>
 
 
-            <div className="bg-white p-6 rounded-lg shadow h-[500px]">
+            <div className="bg-white p-6 rounded-lg shadow h-[500px] transition-transform duration-200 hover:scale-105">
               <h2 className="text-xl font-semibold mb-4">Color Distribution</h2>
               <div className="h-[calc(100%-2rem)] flex items-center justify-center">
                 <PolarArea

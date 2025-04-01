@@ -21,15 +21,31 @@ export default function RootLayout({ children }) {
         {showHeader && (
           <header className="bg-white shadow-sm">
             <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 relative flex items-center">
-              <Link
-                href="/"
-                className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0"
-              >
-                ← Back to Homepage
-              </Link>
-              <h1 className="text-2xl font-bold text-gray-900 w-full text-center">
-                Memories Database
-              </h1>
+              {pathname === "/visualization" ? (
+                <>
+                  <Link
+                    href="/memories"
+                    className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0 ml-4"
+                  >
+                    ← Back to Memories Database
+                  </Link>
+                  <h1 className="text-2xl font-bold text-gray-900 w-full text-center">
+                    Visualization Data
+                  </h1>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/"
+                    className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0 ml-4"
+                  >
+                    ← Back to Homepage
+                  </Link>
+                  <h1 className="text-2xl font-bold text-gray-900 w-full text-center">
+                    Memories Database
+                  </h1>
+                </>
+              )}
             </div>
           </header>
         )}

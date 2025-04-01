@@ -1,7 +1,35 @@
 .group:hover .group-hover\:border-transparent {
-    border-color: transparent;
-  }
-  
-  [style*="--hover-bg"]:hover {
-    background-color: var(--hover-bg) !important;
-  }
+  border-color: transparent;
+}
+
+[style*="--hover-bg"]:hover {
+  background-color: var(--hover-bg) !important;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+  /* Adjust as needed */
+}
+
+.border-t {
+  border-top: 1px solid #e5e7eb;
+  /* Light gray border */
+}
+
+.text-gray-600 {
+  color: #4b5563;
+  /* Darker gray for better readability */
+}
+
+.text-gray-500 {
+  color: #6b7280;
+  /* Slightly lighter gray */
+}
+
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
