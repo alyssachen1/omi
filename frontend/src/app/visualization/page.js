@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import Link from "next/link";
 import {
@@ -156,34 +157,6 @@ const people = [
   },
 ];
 
-const polarData = {
-  labels: ["Yellow", "Blue", "Red", "Green"],
-  datasets: [
-    {
-      label: "Color Distribution",
-      data: people
-        .filter((p) => p.color_matches) // do we only include people with color_matches ?
-        .map((p) => [
-          p.color_matches.Yellow || 0,
-          p.color_matches.Blue || 0,
-          p.color_matches.Red || 0,
-          p.color_matches.Green || 0,
-        ])
-        .reduce(
-          (acc, curr) => curr.map((num, idx) => (acc[idx] || 0) + num),
-          [0, 0, 0, 0]
-        ),
-      backgroundColor: [
-        "rgba(255, 206, 86, 0.5)",
-        "rgba(54, 162, 235, 0.5)",
-        "rgba(255, 99, 132, 0.5)",
-        "rgba(75, 192, 192, 0.5)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
 const axisOptions = {
   "expressiveness-diversity": {
     xLabel: "Expressiveness",
@@ -310,17 +283,15 @@ const tooltipStyles = `
   }
 `;
 
-const colorMap = {
-  Yellow: "rgba(255, 206, 86, 0.5)",
-  Blue: "rgba(54, 162, 235, 0.5)",
-  Red: "rgba(255, 99, 132, 0.5)",
-  Green: "rgba(75, 192, 192, 0.5)",
-  Orange: "rgba(255, 198, 140, 1)",
-  Gray: "rgba(200, 200, 200, 1)",
-  Black: "rgba(0, 0, 0, 0.5)",
-  Pink: "rgba(255, 182, 193, 0.5)",
-  Purple: "rgba(147, 112, 219, 0.5)",
-  White: "rgba(255, 255, 255, 0.5)",
+const bubbleOptions = {
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      enabled: false
+    }
+  }
 };
 
 export default function AnimatedTooltipPreview() {
@@ -329,17 +300,17 @@ export default function AnimatedTooltipPreview() {
   const [axisMode, setAxisMode] = useState("expressiveness-diversity");
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedInteraction, setSelectedInteraction] = useState(null);
+  const [memoryData, setMemoryData] = useState(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("memoryData");
+    console.log(stored);
+    if (stored) {
+      setMemoryData(JSON.parse(stored));
+    }
+  }, []);
 
   const selectedAxis = axisOptions[axisMode];
-  const transformedData = {
-    datasets: [
-      {
-        label: "Color Traits",
-        data: people.map((p) => selectedAxis.computeXY(p)),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-    ],
-  };
 
   const getDominantColor = (person) => {
     if (!person.color_matches) return "rgba(200, 200, 200, 0.5)"; // default color is gray
@@ -417,125 +388,92 @@ export default function AnimatedTooltipPreview() {
           >
             ← Back to Homepage
           </Link>
-          <h1 className="text-2xl font-bold text-gray-900 font-inter">
+          <h1 className={`text-2xl font-bold text-gray-900 ${inter.className}`}>
             Visualization Dashboard
           </h1>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
-        <div className="flex flex-row items-center justify-center mb-10 w-full">
+        <div className="flex justify-center items-center mb-8">
           <AnimatedTooltip items={people} onItemClick={handlePersonClick} />
         </div>
 
-        {isClient && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Polar Chart</h2>
-              <div style={{ height: "400px" }}>
-                <PolarArea
+        <div className="grid grid-cols-2 gap-8 mb-8">
+          <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col">
+            <h2 className="text-xl font-semibold mb-4 text-center">Interaction Timeline</h2>
+            <div className="flex-1 flex items-center justify-center">
+              {selectedPerson && <TimelineChart person={selectedPerson} />}
+            </div>
+          </div>
+
+          <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col">
+            <h2 className="text-xl font-semibold mb-4 text-center">Color Traits Map</h2>
+            <div className="flex gap-2 mb-4 justify-center">
+              <button
+                className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
+                style={{ backgroundColor: "#886176" }}
+                onClick={() => setAxisMode("expressiveness-diversity")}
+              >
+                Expressiveness vs Reserved
+              </button>
+              <button
+                className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
+                style={{ backgroundColor: "#7C5869" }}
+                onClick={() => setAxisMode("openness-authority")}
+              >
+                Openness vs Authority
+              </button>
+              <button
+                className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
+                style={{ backgroundColor: "#5A7D7C" }}
+                onClick={() => setAxisMode("positive-negative")}
+              >
+                Pos vs Neg Traits
+              </button>
+            </div>
+            <div className="flex-1 flex items-center justify-center">
+              <Bubble data={transformedDataPersonSpecific} options={bubbleOptions} />
+            </div>
+          </div>
+        </div>
+
+        {/* Personality Card and Polar Chart */}
+        {selectedPerson && (
+          <div className="grid grid-cols-2 gap-8">
+            <PersonalityCard person={selectedPerson} />
+
+            <div className="bg-white p-6 rounded-lg shadow h-[500px]">
+              <h2 className="text-xl font-semibold mb-4">Color Distribution</h2>
+              <div className="h-[calc(100%-2rem)] flex items-center justify-center">
+                <PolarArea 
                   data={getPolarData(selectedPerson)}
                   options={{
                     ...chartOptions,
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                      r: {
-                        max: 70,
+                      r: {  
+                        max: 100,
                         beginAtZero: true,
-                      },
+                      }
                     },
                     animation: {
                       animateRotate: true,
-                      animateScale: true,
+                      animateScale: true
                     },
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="bg-white p-6 rounded-lg shadow">
-              <h2 className="text-xl font-semibold mb-4">Color Traits Map</h2>
-              <div className="flex gap-2 mb-4">
-                <button
-                  className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-                  style={{ backgroundColor: "#886176" }}
-                  onClick={() => setAxisMode("expressiveness-diversity")}
-                >
-                  Expressiveness vs Reserved
-                </button>
-                <button
-                  className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-                  style={{ backgroundColor: "#7C5869" }}
-                  onClick={() => setAxisMode("openness-authority")}
-                >
-                  Openness vs Authority
-                </button>
-                <button
-                  className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-                  style={{ backgroundColor: "#5A7D7C" }}
-                  onClick={() => setAxisMode("positive-negative")}
-                >
-                  Pos vs Neg Traits
-                </button>
-              </div>
-              <div style={{ height: "400px" }}>
-                <Bubble
-                  data={transformedDataPersonSpecific}
-                  options={{
-                    ...chartOptions,
-                    responsive: true,
-                    maintainAspectRatio: false,
                     plugins: {
-                      ...chartOptions.plugins,
+                      tooltip: {
+                        enabled: false
+                      },
                       legend: {
-                        display: false, // removed legend but can put back on if we find a good thing to displau
-                      },
-                    },
-                    scales: {
-                      x: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: {
-                          display: true,
-                          text: selectedAxis.xLabel,
-                        },
-                      },
-                      y: {
-                        beginAtZero: true,
-                        max: 100,
-                        title: {
-                          display: true,
-                          text: selectedAxis.yLabel,
-                        },
-                      },
-                    },
+                        display: true
+                      }
+                    }
                   }}
                 />
               </div>
             </div>
-
-            {selectedPerson && (
-              <div className="col-span-2 bg-white p-6 rounded-lg shadow">
-                <h2 className="text-xl font-semibold mb-4">
-                  Interaction Timeline - {selectedPerson.name}
-                </h2>
-                <div style={{ height: "300px" }} className="relative">
-                  <TimelineChart
-                    person={selectedPerson}
-                    onPointHover={(interaction) =>
-                      setSelectedInteraction(interaction)
-                    }
-                  />
-                </div>
-              </div>
-            )}
-
-            {selectedPerson && (
-              <div className="mt-8">
-                <PersonalityCard person={selectedPerson} />
-              </div>
-            )}
           </div>
         )}
       </main>
