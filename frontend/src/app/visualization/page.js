@@ -36,7 +36,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const people = [
+const people2 = [
   {
     id: 1,
     name: "aly",
@@ -140,6 +140,55 @@ const people = [
     pos_traits: ["Leadership", "Action", "Confidence"],
     neg_traits: ["Aggressive", "Impatient", "Dominant"],
     keywords: ["power", "drive"],
+    interactions: [
+      {
+        date: "2024-01-15",
+        dominantColor: "Orange",
+        wordCount: 220,
+        color_matches: {
+          Orange: 60,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-01-18",
+        dominantColor: "Yellow",
+        wordCount: 120,
+        color_matches: {
+          Yellow: 60,
+          Blue: 20,
+          Red: 10,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-01-20",
+        dominantColor: "Red",
+        wordCount: 120,
+        color_matches: {
+          Red: 70,
+          Yellow: 20,
+          Blue: 10,
+        },
+      },
+      {
+        date: "2024-01-22",
+        dominantColor: "Red",
+        wordCount: 120,
+        color_matches: {
+          Red: 75,
+          Yellow: 20,
+          Blue: 5,
+        },
+      },
+    ],
+    stats: {
+      totalInteractions: 4,
+      lastMessage: "2024-04-14",
+      avgWordsPerSession: 120,
+      colorShifts: 2,
+      colorTimeline: "Orange → Yellow → Red",
+    },
   },
   {
     id: 4,
@@ -157,123 +206,145 @@ const people = [
   },
 ];
 
-const axisOptions = {
-  "expressiveness-diversity": {
-    xLabel: "Expressiveness",
-    yLabel: "Trait Diversity",
-    computeXY: (person) => ({
-      x: person.color_matches.Yellow || 0,
-      y: person.pos_traits.length + person.neg_traits.length,
-      r: 15,
-    }),
-  },
-  "openness-authority": {
-    xLabel: "Emotional Openness",
-    yLabel: "Authority Score",
-    computeXY: (person) => ({
-      x: person.color_matches.Blue || 0,
-      y: person.color_matches.Red || 0,
-      r: 15,
-    }),
-  },
-  "positive-negative": {
-    xLabel: "Positive Trait Match %",
-    yLabel: "Negative Trait Match %",
-    computeXY: (person) => ({
-      x: person.pos_traits.length * 20,
-      y: person.neg_traits.length * 20,
-      r: 15,
-    }),
-  },
-};
+export default function AnimatedTooltipPreview() {
+  const [question, setQuestion] = useState("");
+  const [isClient, setIsClient] = useState(false);
+  const [axisMode, setAxisMode] = useState("expressiveness-diversity");
+  const [selectedPerson, setSelectedPerson] = useState(null);
+  const [selectedInteraction, setSelectedInteraction] = useState(null);
+  const [memoryData, setMemoryData] = useState(null);
+  const [people, setPeople] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-const CustomTooltip = ({ person }) => (
-  <div className="bg-white p-4 rounded-lg shadow-lg">
-    <div className="font-bold text-lg mb-2">
-      {person.name} - {person.suggested_color}
-    </div>
-    <div className="mb-2">
-      <div className="font-semibold">Color Matches:</div>
-      {Object.entries(person.color_matches).map(([color, percentage]) => (
-        <div key={color} className="flex justify-between">
-          <span>{color}:</span>
-          <span>{percentage}%</span>
-        </div>
-      ))}
-    </div>
-    <div className="mb-2">
-      <div className="font-semibold">Positive Traits:</div>
-      <div>{person.pos_traits.join(", ")}</div>
-    </div>
-    {person.neg_traits.length > 0 && (
-      <div className="mb-2">
-        <div className="font-semibold">Negative Traits:</div>
-        <div>{person.neg_traits.join(", ")}</div>
+  useEffect(() => {
+    const stored = localStorage.getItem("memoryData");
+    if (stored) {
+      const storedObj = JSON.parse(stored);
+      setMemoryData(storedObj);
+      const peopleObj = JSON.parse(storedObj.ai_analysis);
+      console.log(peopleObj);
+      setPeople(peopleObj);
+    }
+    setIsLoading(false);
+  }, []);
+
+  const axisOptions = {
+    "expressiveness-diversity": {
+      xLabel: "Expressiveness",
+      yLabel: "Reserved",
+      computeXY: (person) => ({
+        x: person.color_matches.Yellow || 0,
+        y: person.pos_traits.length + person.neg_traits.length,
+        r: 15,
+      }),
+    },
+    "openness-authority": {
+      xLabel: "Openness",
+      yLabel: "Authority",
+      computeXY: (person) => ({
+        x: person.color_matches.Blue || 0,
+        y: person.color_matches.Red || 0,
+        r: 15,
+      }),
+    },
+    "positive-negative": {
+      xLabel: "Positive Traits",
+      yLabel: "Negative Traits",
+      computeXY: (person) => ({
+        x: person.pos_traits.length * 20,
+        y: person.neg_traits.length * 20,
+        r: 15,
+      }),
+    },
+  };
+
+  const CustomTooltip = ({ person }) => (
+    <div className="bg-white p-4 rounded-lg shadow-lg">
+      <div className="font-bold text-lg mb-2">
+        {person.name} - {person.suggested_color}
       </div>
-    )}
-    <div>
-      <div className="font-semibold">Keywords:</div>
-      <div>{person.keywords.join(", ")}</div>
+      <div className="mb-2">
+        <div className="font-semibold">Color Matches:</div>
+        {Object.entries(person.color_matches).map(([color, percentage]) => (
+          <div key={color} className="flex justify-between">
+            <span>{color}:</span>
+            <span>{percentage}%</span>
+          </div>
+        ))}
+      </div>
+      <div className="mb-2">
+        <div className="font-semibold">Positive Traits:</div>
+        <div>{person.pos_traits.join(", ")}</div>
+      </div>
+      {person.neg_traits.length > 0 && (
+        <div className="mb-2">
+          <div className="font-semibold">Negative Traits:</div>
+          <div>{person.neg_traits.join(", ")}</div>
+        </div>
+      )}
+      <div>
+        <div className="font-semibold">Keywords:</div>
+        <div>{person.keywords.join(", ")}</div>
+      </div>
     </div>
-  </div>
-);
+  );
 
-const chartOptions = {
-  plugins: {
-    tooltip: {
-      enabled: false,
-      external: function (context) {
-        let tooltipEl = document.getElementById("chartjs-tooltip");
+  const chartOptions = {
+    plugins: {
+      tooltip: {
+        enabled: false,
+        external: function (context) {
+          let tooltipEl = document.getElementById("chartjs-tooltip");
 
-        if (!tooltipEl) {
-          tooltipEl = document.createElement("div");
-          tooltipEl.id = "chartjs-tooltip";
-          tooltipEl.innerHTML = "<div></div>";
-          document.body.appendChild(tooltipEl);
-          const root = createRoot(tooltipEl.querySelector("div"));
-          tooltipEl.root = root;
-        }
-
-        const tooltipModel = context.tooltip;
-        if (tooltipModel.opacity === 0) {
-          tooltipEl.style.opacity = 0;
-          return;
-        }
-
-        if (tooltipModel.dataPoints && tooltipModel.dataPoints.length) {
-          const dataPoint = tooltipModel.dataPoints[0];
-          const person = people[dataPoint.dataIndex];
-
-          if (person) {
-            tooltipEl.root.render(<CustomTooltip person={person} />);
+          if (!tooltipEl) {
+            tooltipEl = document.createElement("div");
+            tooltipEl.id = "chartjs-tooltip";
+            tooltipEl.innerHTML = "<div></div>";
+            document.body.appendChild(tooltipEl);
+            const root = createRoot(tooltipEl.querySelector("div"));
+            tooltipEl.root = root;
           }
 
-          const position = context.chart.canvas.getBoundingClientRect();
-          const bodyFont = context.chart.options.font;
+          const tooltipModel = context.tooltip;
+          if (tooltipModel.opacity === 0) {
+            tooltipEl.style.opacity = 0;
+            return;
+          }
 
-          tooltipEl.style.opacity = 1;
-          tooltipEl.style.position = "absolute";
-          tooltipEl.style.left =
-            position.left + window.pageXOffset + dataPoint.element.x + "px";
-          tooltipEl.style.top =
-            position.top + window.pageYOffset + dataPoint.element.y + "px";
-          tooltipEl.style.font = bodyFont;
-          tooltipEl.style.padding =
-            tooltipModel.padding + "px " + tooltipModel.padding + "px";
-          tooltipEl.style.pointerEvents = "none";
-          tooltipEl.style.transform = "translate(-50%, -100%)";
-          tooltipEl.style.transition = "all .1s ease";
-          tooltipEl.style.zIndex = 1000;
-        }
+          if (tooltipModel.dataPoints && tooltipModel.dataPoints.length) {
+            const dataPoint = tooltipModel.dataPoints[0];
+            const person = people[dataPoint.dataIndex];
+
+            if (person) {
+              tooltipEl.root.render(<CustomTooltip person={person} />);
+            }
+
+            const position = context.chart.canvas.getBoundingClientRect();
+            const bodyFont = context.chart.options.font;
+
+            tooltipEl.style.opacity = 1;
+            tooltipEl.style.position = "absolute";
+            tooltipEl.style.left =
+              position.left + window.pageXOffset + dataPoint.element.x + "px";
+            tooltipEl.style.top =
+              position.top + window.pageYOffset + dataPoint.element.y + "px";
+            tooltipEl.style.font = bodyFont;
+            tooltipEl.style.padding =
+              tooltipModel.padding + "px " + tooltipModel.padding + "px";
+            tooltipEl.style.pointerEvents = "none";
+            tooltipEl.style.transform = "translate(-50%, -100%)";
+            tooltipEl.style.transition = "all .1s ease";
+            tooltipEl.style.zIndex = 1000;
+          }
+        },
+      },
+      legend: {
+        display: true,
       },
     },
-    legend: {
-      display: true,
-    },
-  },
-};
+  };
 
-const tooltipStyles = `
+  const tooltipStyles = `
   #chartjs-tooltip {
     background: white;
     border-radius: 0.5rem;
@@ -283,32 +354,39 @@ const tooltipStyles = `
   }
 `;
 
-const bubbleOptions = {
-  plugins: {
-    legend: {
-      display: false
+  const bubbleOptions = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: axisOptions[axisMode].xLabel,
+          font: {
+            size: 14
+          }
+        },
+        grid: {
+          display: true
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: axisOptions[axisMode].yLabel,
+          font: {
+            size: 14
+          }
+        },
+        grid: {
+          display: true
+        }
+      }
     },
-    tooltip: {
-      enabled: false
+    plugins: {
+      legend: {
+        display: false
+      }
     }
-  }
-};
-
-export default function AnimatedTooltipPreview() {
-  const [question, setQuestion] = useState("");
-  const [isClient, setIsClient] = useState(false);
-  const [axisMode, setAxisMode] = useState("expressiveness-diversity");
-  const [selectedPerson, setSelectedPerson] = useState(null);
-  const [selectedInteraction, setSelectedInteraction] = useState(null);
-  const [memoryData, setMemoryData] = useState(null);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("memoryData");
-    console.log(stored);
-    if (stored) {
-      setMemoryData(JSON.parse(stored));
-    }
-  }, []);
+  };
 
   const selectedAxis = axisOptions[axisMode];
 
@@ -336,11 +414,11 @@ export default function AnimatedTooltipPreview() {
         label: "Color Distribution",
         data: person
           ? [
-            person.color_matches.Yellow || 0,
-            person.color_matches.Blue || 0,
-            person.color_matches.Red || 0,
-            person.color_matches.Green || 0,
-          ]
+              person.color_matches.Yellow || 0,
+              person.color_matches.Blue || 0,
+              person.color_matches.Red || 0,
+              person.color_matches.Green || 0,
+            ]
           : [0, 0, 0, 0],
         backgroundColor: [
           "rgba(255, 206, 86, 0.5)", // yellow
@@ -357,8 +435,8 @@ export default function AnimatedTooltipPreview() {
     datasets: [
       {
         label: "Color Traits",
-        data: people.map((p) => selectedAxis.computeXY(p)),
-        backgroundColor: people.map((p) => getDominantColor(p)),
+        data: people ? people.map((p) => selectedAxis.computeXY(p)) : [],
+        backgroundColor: people ? people.map((p) => getDominantColor(p)) : [],
       },
     ],
   };
@@ -378,22 +456,24 @@ export default function AnimatedTooltipPreview() {
     };
   }, []);
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 font-inter flex items-center justify-center">
+        <div className="text-xl text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
+  if (!people) {
+    return (
+      <div className="min-h-screen bg-gray-50 font-inter flex items-center justify-center">
+        <div className="text-xl text-gray-600">No data available</div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gray-50 font-inter">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <Link
-            href="/"
-            className="text-gray-800 hover:text-gray-600 transition-colors"
-          >
-            ← Back to Homepage
-          </Link>
-          <h1 className={`text-2xl font-bold text-gray-900 ${inter.className}`}>
-            Visualization Dashboard
-          </h1>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mb-8">
           <AnimatedTooltip items={people} onItemClick={handlePersonClick}>
@@ -485,20 +565,20 @@ export default function AnimatedTooltipPreview() {
                       r: {
                         max: 100,
                         beginAtZero: true,
-                      }
+                      },
                     },
                     animation: {
                       animateRotate: true,
-                      animateScale: true
+                      animateScale: true,
                     },
                     plugins: {
                       tooltip: {
-                        enabled: false
+                        enabled: false,
                       },
                       legend: {
-                        display: true
-                      }
-                    }
+                        display: true,
+                      },
+                    },
                   }}
                 />
               </div>

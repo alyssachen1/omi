@@ -4,55 +4,16 @@ from supabase import create_client, Client
 from dotenv import load_dotenv
 import os
 from datetime import datetime
-from openai import OpenAI
 
 # 🔄 Load environment variables
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
 
 app = Flask(__name__)
-
-def process_with_chatgpt(title: str, overview: str, transcript: str) -> dict:
-    """Process the transcript with ChatGPT to get AI insights."""
-    try:
-        prompt = f"""
-
-        Please analyze this transcript and identify the names of each specific speaker in the trasncript.
-
-        Title: {title}
-        Overview: {overview}
-        Transcript: {transcript}
-        """
-
-        response = openai_client.chat.completions.create(
-            model="gpt-4",  # or "gpt-3.5-turbo" for a more economical option
-            messages=[
-                {"role": "system", "content": "You are an AI assistant that analyzes conversation transcripts and provides structured insights. Always respond in valid JSON format."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=1000
-        )
-
-        # Parse the JSON response
-        ai_analysis = json.loads(response.choices[0].message.content)
-        print("✨ AI Analysis completed successfully")
-        return ai_analysis
-
-    except Exception as e:
-        print("❌ Error in AI processing:", e)
-        return {
-            "summary": "Error processing with AI",
-            "topics": [],
-            "action_items": [],
-            "sentiment": "unknown"
-        }
 
 def simplify_transcript(json_data):
     try:
@@ -70,18 +31,14 @@ def simplify_transcript(json_data):
         transcript = "\n".join(transcript_lines)
 
         if not any([title, overview, transcript]):
-          print("⚠️ Simplified content is empty — skipping upload.")
-          return {}
-
-        # Get AI analysis
-        ai_results = process_with_chatgpt(title, overview, transcript)
+            print("⚠️ Simplified content is empty — skipping upload.")
+            return {}
 
         return {
             "title": title,
             "overview": overview,
             "transcript": transcript,
-            "created_at": datetime.utcnow().isoformat(),
-            "ai_analysis": ai_results  # Add AI analysis to the object
+            "created_at": datetime.utcnow().isoformat()
         }
     except Exception as e:
         print("❌ Error simplifying transcript:", e)
@@ -95,7 +52,7 @@ def webhook():
 
         simplified = simplify_transcript(data)
         if simplified:
-            print("🧠 Simplified JSON with AI analysis:")
+            print("🧠 Simplified JSON:")
             print(json.dumps(simplified, indent=2))
 
             # 🔼 Upload to Supabase
