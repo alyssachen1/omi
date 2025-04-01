@@ -19,6 +19,7 @@ import { createRoot } from "react-dom/client";
 import { FloatingBubbles } from "@/components/ui/floating-bubbles";
 import { TimelineChart } from "@/components/ui/timeline-chart";
 import { Inter } from "next/font/google";
+import { PersonalityCard } from "@/components/ui/personality-card";
 
 ChartJS.register(
   RadialLinearScale,
@@ -184,20 +185,6 @@ const polarData = {
   ],
 };
 
-const bubbleData = {
-  datasets: [
-    {
-      label: "Color Traits",
-      data: [
-        { x: 20, y: 30, r: 15 },
-        { x: 40, y: 10, r: 10 },
-        { x: 15, y: 50, r: 20 },
-      ],
-      backgroundColor: "rgba(255, 99, 132, 0.5)",
-    },
-  ],
-};
-
 const axisOptions = {
   "expressiveness-diversity": {
     xLabel: "Expressiveness",
@@ -335,96 +322,6 @@ const colorMap = {
   Pink: "rgba(255, 182, 193, 0.5)",
   Purple: "rgba(147, 112, 219, 0.5)",
   White: "rgba(255, 255, 255, 0.5)",
-};
-
-const PersonalityCard = ({ person }) => {
-  if (!person) return null;
-
-  const baseColor = colorMap[person.suggested_color] || colorMap.Gray;
-
-  const backgroundColor = baseColor.replace("0.5", "0.4");
-
-  return (
-    <div
-      className="rounded-lg p-6 shadow-lg"
-      style={{
-        backgroundColor: backgroundColor,
-        backdropFilter: "blur(8px)",
-      }}
-    >
-      <h2 className="text-xl font-bold mb-4">{person.name}</h2>
-
-      {/* Traits Section */}
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Positive Traits</h3>
-        <div className="flex flex-wrap gap-2">
-          {person.pos_traits.map((trait, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-white/50 rounded-full text-sm"
-            >
-              {trait}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Negative Traits</h3>
-        <div className="flex flex-wrap gap-2">
-          {person.neg_traits.map((trait, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 bg-white/50 rounded-full text-sm"
-            >
-              {trait}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Color Distribution */}
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Color Distribution</h3>
-        {Object.entries(person.color_matches).map(([color, percentage]) => (
-          <div key={color} className="flex items-center gap-2 mb-1">
-            <span className="text-sm">{color}:</span>
-            <div className="flex-1 h-2 bg-white/30 rounded-full overflow-hidden">
-              <div
-                className="h-full bg-white/50 rounded-full"
-                style={{ width: `${percentage}%` }}
-              />
-            </div>
-            <span className="text-sm">{percentage}%</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Stats Section*/}
-      {person.stats && (
-        <div className="mt-4 pt-4 border-t border-white/30">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm opacity-75">Total Interactions</p>
-              <p className="font-semibold">{person.stats.totalInteractions}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Last Interaction</p>
-              <p className="font-semibold">{person.stats.lastMessage}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Avg Words/Session</p>
-              <p className="font-semibold">{person.stats.avgWordsPerSession}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Color Shifts</p>
-              <p className="font-semibold">{person.stats.colorShifts}</p>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
 };
 
 export default function AnimatedTooltipPreview() {
@@ -641,6 +538,12 @@ export default function AnimatedTooltipPreview() {
                     }
                   />
                 </div>
+              </div>
+            )}
+
+            {selectedPerson && (
+              <div className="mt-8">
+                <PersonalityCard person={selectedPerson} />
               </div>
             )}
           </div>
