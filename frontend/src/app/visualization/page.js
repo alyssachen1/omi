@@ -336,11 +336,11 @@ export default function AnimatedTooltipPreview() {
         label: "Color Distribution",
         data: person
           ? [
-              person.color_matches.Yellow || 0,
-              person.color_matches.Blue || 0,
-              person.color_matches.Red || 0,
-              person.color_matches.Green || 0,
-            ]
+            person.color_matches.Yellow || 0,
+            person.color_matches.Blue || 0,
+            person.color_matches.Red || 0,
+            person.color_matches.Green || 0,
+          ]
           : [0, 0, 0, 0],
         backgroundColor: [
           "rgba(255, 206, 86, 0.5)", // yellow
@@ -446,14 +446,14 @@ export default function AnimatedTooltipPreview() {
             <div className="bg-white p-6 rounded-lg shadow h-[500px]">
               <h2 className="text-xl font-semibold mb-4">Color Distribution</h2>
               <div className="h-[calc(100%-2rem)] flex items-center justify-center">
-                <PolarArea 
+                <PolarArea
                   data={getPolarData(selectedPerson)}
                   options={{
                     ...chartOptions,
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                      r: {  
+                      r: {
                         max: 100,
                         beginAtZero: true,
                       }
