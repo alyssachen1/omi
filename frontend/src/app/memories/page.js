@@ -152,20 +152,6 @@ const TableWithButton = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 font-inter">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <Link
-            href="/"
-            className="text-gray-800 hover:text-gray-600 transition-colors"
-          >
-            ← Back to Homepage
-          </Link>
-          <h1 className="text-2xl font-bold text-gray-900 font-inter">
-            Memories Database
-          </h1>
-        </div>
-      </header>
-
       <main className="p-4">
         <table className="min-w-full border border-gray-300 text-sm">
           <thead className="bg-gray-100">
