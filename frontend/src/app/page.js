@@ -18,7 +18,7 @@ export default function Homepage() {
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <button 
             className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-            style={{ backgroundColor: 'rgba(75, 192, 192, 0.5)' }}
+            style={{ backgroundColor: 'rgba(63, 206, 234, 0.5)' }}
           >
             Sync Omi
           </button>
