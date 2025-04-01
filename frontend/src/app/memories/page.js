@@ -5,13 +5,90 @@ import { useRouter } from "next/navigation";
 
 import { createClient } from "@supabase/supabase-js";
 
+import { OpenAI } from "openai";
+
 // Supabase credentials from environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
+const openai = new OpenAI({
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // Make sure to load environment vars
+  dangerouslyAllowBrowser: true,
+});
+
+async function processWithChatGPT(transcript) {
+  try {
+    const prompt = `
+Given this transcript, can you extrapolate the speakers and then put them into this array of objects with the following format. Please only respond with the json file.
+
+Format: {
+  "id": 1,
+  "name": "aly",
+  "suggested_color": "Yellow",
+  "color_matches": {
+    "Yellow": 60,
+    "Blue": 20,
+    "Red": 10,
+    "Green": 10
+  },
+  "pos_traits": ["Happiness", "Optimism", "Creativity"],
+  "neg_traits": ["Impulsive", "Scattered"],
+  "keywords": ["energy", "communication", "happiness"],
+  "interactions": [
+    {
+      "date": "2025-04-01",
+      "dominantColor": "Yellow",
+      "wordCount": 100,
+      "color_matches": {
+        "Yellow": 60,
+        "Blue": 20,
+        "Red": 10,
+        "Green": 10
+      }
+    }
+  ],
+  "stats": {
+    "totalInteractions": 1,
+    "lastMessage": "2025-04-01",
+    "avgWordsPerSession": 100,
+    "colorShifts": 0,
+    "colorTimeline": "Yellow"
+  }
+}
+
+Transcript:
+${transcript}
+    `;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an AI assistant that analyzes conversation transcripts and provides structured insights. Always respond in JSON format.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
+
+    const aiAnalysis = JSON.parse(completion.choices[0].message.content);
+    console.log("✨ AI Analysis completed successfully");
+    return aiAnalysis;
+  } catch (error) {
+    console.error("❌ Error in AI processing:", error);
+    return { test: "bad" };
+  }
+}
 
 const TableWithButton = () => {
   const [items, setItems] = useState([]);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -47,6 +124,32 @@ const TableWithButton = () => {
     router.push("/visualization");
   };
 
+  const handleAnalyze = async (item) => {
+    const title = item.title;
+    const transcript = item.transcript;
+    const aiResponse = await processWithChatGPT(transcript);
+    console.log(aiResponse);
+
+    // 2. Update local state
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.title === title ? { ...item, ai_analysis: aiResponse } : item
+      )
+    );
+
+    // 3. Update Supabase
+    const { data, error } = await supabase
+      .from("transcripts")
+      .update({ ai_analysis: aiResponse })
+      .eq("title", title);
+
+    if (error) {
+      console.error("❌ Supabase update failed:", error);
+    } else {
+      console.log("✅ Supabase updated:", data);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 font-inter">
       <header className="bg-white shadow-sm">
@@ -70,8 +173,8 @@ const TableWithButton = () => {
               <th className="px-2 py-2 border">Title</th>
               <th className="px-2 py-2 border">Overview</th>
               <th className="px-2 py-2 border">Transcript</th>
-              <th className="px-2 py-2 border">AI Analysis</th>
               <th className="px-2 py-2 border">Created At</th>
+              <th className="px-2 py-2 border">AI Analysis</th>
               <th className="px-2 py-2 border">Visualize</th>
             </tr>
           </thead>
@@ -104,12 +207,24 @@ const TableWithButton = () => {
                     </button>
                   )}
                 </td>
-                <td className="px-2 py-2 border">{item.ai_analysis || "-"}</td>
                 <td className="px-2 py-2 border">
                   {item.created_at
                     ? new Date(item.created_at).toLocaleString()
                     : "-"}
                 </td>
+                <td className="px-2 py-2 border">
+                  {item.ai_analysis ? (
+                    item.ai_analysis
+                  ) : (
+                    <button
+                      onClick={() => handleAnalyze(item)}
+                      className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+                    >
+                      Call MCP
+                    </button>
+                  )}
+                </td>
+
                 <td className="px-2 py-2 border">
                   <button
                     onClick={() => handleVisualize(item)}
