@@ -140,6 +140,55 @@ const people2 = [
     pos_traits: ["Leadership", "Action", "Confidence"],
     neg_traits: ["Aggressive", "Impatient", "Dominant"],
     keywords: ["power", "drive"],
+    interactions: [
+      {
+        date: "2024-01-15",
+        dominantColor: "Orange",
+        wordCount: 220,
+        color_matches: {
+          Orange: 60,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-01-18",
+        dominantColor: "Yellow",
+        wordCount: 120,
+        color_matches: {
+          Yellow: 60,
+          Blue: 20,
+          Red: 10,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-01-20",
+        dominantColor: "Red",
+        wordCount: 120,
+        color_matches: {
+          Red: 70,
+          Yellow: 20,
+          Blue: 10,
+        },
+      },
+      {
+        date: "2024-01-22",
+        dominantColor: "Red",
+        wordCount: 120,
+        color_matches: {
+          Red: 75,
+          Yellow: 20,
+          Blue: 5,
+        },
+      },
+    ],
+    stats: {
+      totalInteractions: 4,
+      lastMessage: "2024-04-14",
+      avgWordsPerSession: 120,
+      colorShifts: 2,
+      colorTimeline: "Orange → Yellow → Red",
+    },
   },
   {
     id: 4,
@@ -182,7 +231,7 @@ export default function AnimatedTooltipPreview() {
   const axisOptions = {
     "expressiveness-diversity": {
       xLabel: "Expressiveness",
-      yLabel: "Trait Diversity",
+      yLabel: "Reserved",
       computeXY: (person) => ({
         x: person.color_matches.Yellow || 0,
         y: person.pos_traits.length + person.neg_traits.length,
@@ -190,8 +239,8 @@ export default function AnimatedTooltipPreview() {
       }),
     },
     "openness-authority": {
-      xLabel: "Emotional Openness",
-      yLabel: "Authority Score",
+      xLabel: "Openness",
+      yLabel: "Authority",
       computeXY: (person) => ({
         x: person.color_matches.Blue || 0,
         y: person.color_matches.Red || 0,
@@ -199,8 +248,8 @@ export default function AnimatedTooltipPreview() {
       }),
     },
     "positive-negative": {
-      xLabel: "Positive Trait Match %",
-      yLabel: "Negative Trait Match %",
+      xLabel: "Positive Traits",
+      yLabel: "Negative Traits",
       computeXY: (person) => ({
         x: person.pos_traits.length * 20,
         y: person.neg_traits.length * 20,
@@ -306,14 +355,37 @@ export default function AnimatedTooltipPreview() {
 `;
 
   const bubbleOptions = {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: axisOptions[axisMode].xLabel,
+          font: {
+            size: 14
+          }
+        },
+        grid: {
+          display: true
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: axisOptions[axisMode].yLabel,
+          font: {
+            size: 14
+          }
+        },
+        grid: {
+          display: true
+        }
+      }
+    },
     plugins: {
       legend: {
-        display: false,
-      },
-      tooltip: {
-        enabled: false,
-      },
-    },
+        display: false
+      }
+    }
   };
 
   const selectedAxis = axisOptions[axisMode];
@@ -402,20 +474,6 @@ export default function AnimatedTooltipPreview() {
 
   return (
     <div className="min-h-screen bg-gray-50 font-inter">
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
-          <Link
-            href="/memories"
-            className="text-gray-800 hover:text-gray-600 transition-colors"
-          >
-            ← Back to Memories
-          </Link>
-          <h1 className={`text-2xl font-bold text-gray-900 ${inter.className}`}>
-            Visualization Dashboard
-          </h1>
-        </div>
-      </header>
-
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mb-8">
           <AnimatedTooltip items={people} onItemClick={handlePersonClick} />
