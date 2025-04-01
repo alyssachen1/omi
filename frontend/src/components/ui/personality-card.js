@@ -51,7 +51,7 @@ export const PersonalityCard = ({ person }) => {
 
   return (
     <div 
-      className="rounded-lg p-6 shadow-lg"
+      className="h-[500px] rounded-lg p-6 shadow-lg overflow-y-auto"
       style={{
         backgroundColor: backgroundColor,
         backdropFilter: 'blur(8px)',
@@ -83,49 +83,8 @@ export const PersonalityCard = ({ person }) => {
         </div>
       </div>
 
-      {/* Color Distribution */}
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Color Distribution</h3>
-        {Object.entries(person.color_matches).map(([color, percentage]) => (
-          <div key={color} className="flex items-center gap-2 mb-1">
-            <span className="text-sm">{color}:</span>
-            <div className="flex-1 h-2 bg-white/30 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-white/50 rounded-full"
-                style={{ width: `${percentage}%` }}
-              />
-            </div>
-            <span className="text-sm">{percentage}%</span>
-          </div>
-        ))}
-      </div>
-
-      {/* Stats Section */}
-      {person.stats && (
-        <div className="mt-4 pt-4 border-t border-white/30">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm opacity-75">Total Interactions</p>
-              <p className="font-semibold">{person.stats.totalInteractions}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Last Interaction</p>
-              <p className="font-semibold">{person.stats.lastMessage}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Avg Words/Session</p>
-              <p className="font-semibold">{person.stats.avgWordsPerSession}</p>
-            </div>
-            <div>
-              <p className="text-sm opacity-75">Color Shifts</p>
-              <p className="font-semibold">{person.stats.colorShifts}</p>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Color Description */}
-      <div className="mt-6 border-t border-white/30 pt-4">
+      {/* Color Personality */}
+      <div className="mt-6">
         <h3 className="font-semibold mb-2">Color Personality</h3>
         <ColorDescription color={person.suggested_color} />
       </div>
