@@ -161,7 +161,7 @@ const TableWithButton = () => {
             ← Back to Homepage
           </Link>
           <h1 className="text-2xl font-bold text-gray-900 font-inter">
-            Visualization Dashboard
+            Memories Database
           </h1>
         </div>
       </header>
