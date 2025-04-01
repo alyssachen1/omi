@@ -16,15 +16,16 @@ export default function Homepage() {
           Who are you talking to, how can you improve, what should you say?
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
-          <button 
+          <button
             className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-            style={{ backgroundColor: 'rgba(63, 206, 234, 0.5)' }}
+            style={{ backgroundColor: "rgba(63, 206, 234, 0.5)" }}
           >
             Sync Omi
           </button>
-          <Link href="/visualization">
+
+          <Link href="/memories">
             <button className="px-4 py-2 text-black hover:bg-white/10 rounded-lg transition duration-200">
-              Visualize
+              View Memories
             </button>
           </Link>
         </div>

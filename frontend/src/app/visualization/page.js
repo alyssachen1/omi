@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 import Link from "next/link";
 import {
@@ -327,6 +328,15 @@ export default function AnimatedTooltipPreview() {
   const [axisMode, setAxisMode] = useState("expressiveness-diversity");
   const [selectedPerson, setSelectedPerson] = useState(null);
   const [selectedInteraction, setSelectedInteraction] = useState(null);
+  const [memoryData, setMemoryData] = useState(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("memoryData");
+    console.log(stored);
+    if (stored) {
+      setMemoryData(JSON.parse(stored));
+    }
+  }, []);
 
   const selectedAxis = axisOptions[axisMode];
 
