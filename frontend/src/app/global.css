@@ -1,0 +1,7 @@
+.group:hover .group-hover\:border-transparent {
+    border-color: transparent;
+  }
+  
+  [style*="--hover-bg"]:hover {
+    background-color: var(--hover-bg) !important;
+  }

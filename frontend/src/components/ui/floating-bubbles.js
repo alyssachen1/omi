@@ -40,7 +40,10 @@ export const FloatingBubbles = () => {
       'rgba(210, 137, 244, 0.5)',
       'rgba(255, 99, 133, 0.4)',
       'rgba(63, 206, 234, 0.5)',
-      'rgba(241, 102, 195, 0.3)'
+      'rgba(241, 102, 130, 0.3)',
+      'rgba(241, 102, 139, 0.3)',
+      'rgba(241, 102, 195, 0.3)',
+      'rgba(176, 255, 144, 0.5)',
     ]
 
     class Bubble {
@@ -197,3 +200,4 @@ export const FloatingBubbles = () => {
     />
   )
 } 
+export default FloatingBubbles;

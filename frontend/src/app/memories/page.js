@@ -1,122 +1,138 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Card } from "@/components/ui/card";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { motion } from "framer-motion";
 
 import { createClient } from "@supabase/supabase-js";
-
 import { OpenAI } from "openai";
+import FloatingBubbles from "@/components/ui/floating-bubbles";
 
-// Supabase credentials from environment variables
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+// Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
+
+// OpenAI client
 const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY, // Make sure to load environment vars
+  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
   dangerouslyAllowBrowser: true,
 });
 
 async function processWithChatGPT(transcript) {
-  try {
-    const prompt = `
-Given this transcript, can you extrapolate the speakers and then put them into this array of objects with the following format. Please only respond with the json file.
-
-Format: {
-  "id": 1,
-  "name": "aly",
-  "suggested_color": "Yellow",
-  "color_matches": {
-    "Yellow": 60,
-    "Blue": 20,
-    "Red": 10,
-    "Green": 10
-  },
-  "pos_traits": ["Happiness", "Optimism", "Creativity"],
-  "neg_traits": ["Impulsive", "Scattered"],
-  "keywords": ["energy", "communication", "happiness"],
-  "interactions": [
-    {
-      "date": "2025-04-01",
-      "dominantColor": "Yellow",
-      "wordCount": 100,
-      "color_matches": {
-        "Yellow": 60,
-        "Blue": 20,
-        "Red": 10,
-        "Green": 10
-      }
-    }
-  ],
-  "stats": {
-    "totalInteractions": 1,
-    "lastMessage": "2025-04-01",
-    "avgWordsPerSession": 100,
-    "colorShifts": 0,
-    "colorTimeline": "Yellow"
-  }
-}
-
+  const prompt = `
+Given this transcript, can you extrapolate the speakers and then put them into this array of objects with the following format:
+[...trimmed for brevity]
 Transcript:
-${transcript}
-    `;
+${transcript}`;
 
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [
-        {
-          role: "system",
-          content:
-            "You are an AI assistant that analyzes conversation transcripts and provides structured insights. Always respond in JSON format.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ],
-      temperature: 0.7,
-      max_tokens: 1000,
-    });
+  const completion = await openai.chat.completions.create({
+    model: "gpt-4",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are an AI assistant that analyzes conversation transcripts and provides structured insights. Always respond in JSON format.",
+      },
+      { role: "user", content: prompt },
+    ],
+    temperature: 0.7,
+    max_tokens: 1000,
+  });
 
-    const aiAnalysis = JSON.parse(completion.choices[0].message.content);
-    console.log("✨ AI Analysis completed successfully");
-    return aiAnalysis;
-  } catch (error) {
-    console.error("❌ Error in AI processing:", error);
-    return {};
-  }
+  return JSON.parse(completion.choices[0].message.content || "{}");
 }
+
+const formatTranscript = (text) => {
+  if (!text) return "-";
+  
+  if (text.includes('\\n')) {
+    return text.split('\\n').map((line, i) => (
+      <div key={i} className="py-1">
+        {line}
+      </div>
+    ));
+  }
+  
+  // If no \n, split at "SPEAKER" but keep "SPEAKER" at the start of each line
+  return text.split('SPEAKER').map((line, i) => {
+    if (i === 0 && !line.trim()) return null; // Skip first empty split
+    return (
+      <div key={i} className="py-1">
+        {i === 0 ? line : `SPEAKER${line}`}
+      </div>
+    );
+  }).filter(Boolean); 
+};
+
+const Bubbles = () => {
+  const bubbles = [
+    { size: "w-32 h-32", color: "bg-blue-100", duration: 20, delay: 0 },
+    { size: "w-24 h-24", color: "bg-red-100", duration: 15, delay: 2 },
+    { size: "w-16 h-16", color: "bg-yellow-100", duration: 18, delay: 1 },
+    { size: "w-20 h-20", color: "bg-green-100", duration: 22, delay: 3 },
+    // Add more bubbles with different sizes and colors
+  ];
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none">
+      {bubbles.map((bubble, index) => (
+        <motion.div
+          key={index}
+          className={`absolute rounded-full ${bubble.size} ${bubble.color} opacity-50`}
+          initial={{ 
+            x: "-10%",
+            y: Math.random() * 100 + "%"
+          }}
+          animate={{
+            x: "110%",
+            y: Math.random() * 100 + "%"
+          }}
+          transition={{
+            duration: bubble.duration,
+            delay: bubble.delay,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const TableWithButton = () => {
   const [items, setItems] = useState([]);
-
+  const [expandedAI, setExpandedAI] = useState({});
+  const [filter, setFilter] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
   useEffect(() => {
     const fetchItems = async () => {
       const { data, error } = await supabase.from("transcripts").select("*");
-      if (error) {
-        console.error("Error fetching data:", error);
-      } else {
-        // Add a `showFullTranscript` field to each item
-        const itemsWithState = data.map((item) => ({
-          ...item,
-          showFullTranscript: false,
-        }));
-        setItems(itemsWithState);
-      }
+      if (data) setItems(data);
+      if (error) console.error(error);
     };
-
     fetchItems();
   }, []);
 
-  const toggleTranscript = (id) => {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, showFullTranscript: !item.showFullTranscript }
-          : item
-      )
-    );
+  const handleAnalyze = async (item) => {
+    const aiResponse = await processWithChatGPT(item.transcript);
+    const { error } = await supabase
+      .from("transcripts")
+      .update({ ai_analysis: aiResponse })
+      .eq("id", item.id);
+
+    if (!error) {
+      setItems((prev) =>
+        prev.map((i) => (i.id === item.id ? { ...i, ai_analysis: aiResponse } : i))
+      );
+    }
   };
 
   const handleVisualize = (item) => {
@@ -124,123 +140,171 @@ const TableWithButton = () => {
     router.push("/visualization");
   };
 
-  const handleAnalyze = async (item) => {
-    const title = item.title;
-    const transcript = item.transcript;
-    const aiResponse = await processWithChatGPT(transcript);
-    console.log(title, transcript);
-    console.log(aiResponse);
-
-    // 2. Update local state
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.title === title ? { ...item, ai_analysis: aiResponse } : item
-      )
-    );
-
-    // 3. Update Supabase
-    const { data, error } = await supabase
-      .from("transcripts")
-      .update({ ai_analysis: aiResponse })
-      .eq("title", title);
-
-    if (error) {
-      console.error("❌ Supabase update failed:", error);
-    } else {
-      console.log("✅ Supabase updated:", data);
-    }
+  const toggleAI = (id) => {
+    setExpandedAI((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  return (
-    <div className="min-h-screen bg-gray-50 font-inter">
-      <main className="p-4">
-        <table className="min-w-full border border-gray-300 text-sm">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-2 py-2 border">Title</th>
-              <th className="px-2 py-2 border">Overview</th>
-              <th className="px-2 py-2 border">Transcript</th>
-              <th className="px-2 py-2 border">Created At</th>
-              <th className="px-2 py-2 border">AI Analysis</th>
-              <th className="px-2 py-2 border">Visualize</th>
-            </tr>
-          </thead>
-          <tbody>
-            {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50 align-top">
-                <td className="px-2 py-2 border">{item.title || "-"}</td>
-                <td className="px-2 py-2 border">{item.overview || "-"}</td>
-                <td className="px-2 py-2 border max-w-xs whitespace-pre-wrap">
-                  {item.showFullTranscript ||
-                    (item.transcript?.length || 0) <= 100 ? (
-                    item.transcript || "-"
-                  ) : (
-                    <>
-                      {item.transcript.slice(0, 100)}...
-                      <button
-                        className="text-blue-500 ml-1 underline"
-                        onClick={() => toggleTranscript(item.id)}
-                      >
-                        Show more
-                      </button>
-                    </>
-                  )}
-                  {item.showFullTranscript && item.transcript?.length > 100 && (
-                    <button
-                      className="text-blue-500 ml-1 underline"
-                      onClick={() => toggleTranscript(item.id)}
-                    >
-                      Show less
-                    </button>
-                  )}
-                </td>
-                <td className="px-2 py-2 border">
-                  {item.created_at
-                    ? new Date(item.created_at).toLocaleString()
-                    : "-"}
-                </td>
-                <td className="px-2 py-2 border">
-                  {item.ai_analysis != "{}" && item.ai_analysis ? (
-                    item.ai_analysis
-                  ) : (
-                    <button
-                      onClick={() => handleAnalyze(item)}
-                      className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
-                    >
-                      Call MCP
-                    </button>
-                  )}
-                </td>
+  const toggleTranscript = (id) => {
+    setItems((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, showFullTranscript: !item.showFullTranscript } : item
+      )
+    );
+  };
 
-                <td className="px-2 py-2 border">
-                  {item.ai_analysis != "{}" && item.ai_analysis ? (
-                    <button
-                      onClick={() => handleVisualize(item)}
-                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 inline-block"
-                    >
-                      View
-                    </button>
-                  ) : (
-                    <button
-                      disabled
-                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 inline-block"
-                    >
-                      View
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-            {items.length === 0 && (
-              <tr>
-                <td colSpan="6" className="text-center py-4 text-gray-500">
-                  No data found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </main>
+  const toggleAnalysis = (id) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, showAnalysis: !item.showAnalysis }
+          : item
+      )
+    );
+  };
+
+  const toggleFullAnalysis = (id) => {
+    setItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === id
+          ? { ...item, showFullAnalysis: !item.showFullAnalysis }
+          : item
+      )
+    );
+  };
+
+  const filteredItems = items.filter(item => 
+    item.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.transcript?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50 font-inter relative overflow-hidden">
+      <div className="fixed inset-0 pointer-events-none">
+        <FloatingBubbles 
+          scale={0.4}
+          opacity={0.15}
+        />
+      </div>
+      
+      <div className="relative z-10">
+        <div className="p-4 max-w-screen-xl mx-auto">
+          <input
+            type="text"
+            placeholder="Search memories by title or transcript..."
+            className="w-full p-3 rounded-full border-2 border-black bg-white text-black 
+            placeholder-black/70 focus:outline-none"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
+        <main className="p-4">
+          <div className="max-w-screen-xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {filteredItems.map((item, index) => (
+                <div 
+                  key={item.id || index} 
+                  className="bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-sm relative min-h-[400px] border border-white/20"
+                >
+                  {/* Fixed height container for title, overview, and date */}
+                  <div className="h-[160px] mb-8">
+                    {/* Title */}
+                    <h2 className="text-xl font-semibold mb-3">{item.title || "-"}</h2>
+                    
+                    {/* Overview and Date */}
+                    <div>
+                      <p className="text-gray-600 mb-2">{item.overview || "-"}</p>
+                      <p className="text-gray-500 text-sm">
+                        {item.created_at ? new Date(item.created_at).toLocaleString() : "-"}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Content wrapper - adds padding at bottom for button */}
+                  <div className="pb-16">
+                    {/* Transcript Section - now starts at same height across cards */}
+                    <div className="border-t pt-5">
+                      <button 
+                        onClick={() => toggleTranscript(item.id)}
+                        className="flex items-center justify-between w-full text-left"
+                      >
+                        <span className="font-medium">Transcript</span>
+                        <svg className={`w-5 h-5 transform ${item.showFullTranscript ? 'rotate-180' : ''}`} 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      {item.showFullTranscript && (
+                        <div className="mt-4">
+                          {formatTranscript(item.transcript)}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* AI Analysis Section */}
+                    <div className="border-t pt-4 mt-4">
+                      <button 
+                        onClick={() => toggleAnalysis(item.id)}
+                        className="flex items-center justify-between w-full text-left"
+                      >
+                        <span className="font-medium">AI Analysis</span>
+                        <svg className={`w-5 h-5 transform ${item.showAnalysis ? 'rotate-180' : ''}`} 
+                             fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      {item.showAnalysis && (
+                        <div className="mt-4">
+                          {item.ai_analysis != "{}" && item.ai_analysis ? (
+                            <>
+                              <div className={`text-gray-600 ${!item.showFullAnalysis ? 'line-clamp-3' : ''}`}>
+                                {typeof item.ai_analysis === 'string' 
+                                  ? item.ai_analysis 
+                                  : JSON.stringify(item.ai_analysis, null, 2)}
+                              </div>
+                              <button
+                                onClick={() => toggleFullAnalysis(item.id)}
+                                className="text-blue-500 hover:text-blue-600 mt-2 text-sm"
+                              >
+                                {item.showFullAnalysis ? 'Show less' : 'Show more'}
+                              </button>
+                            </>
+                          ) : (
+                            <div className="text-gray-500">No data available</div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Action Button - with hover inversion effect */}
+                  <div className="absolute bottom-6 right-6">
+                    {(!item.ai_analysis || item.ai_analysis === "{}") ? (
+                      <button
+                        onClick={() => handleAnalyze(item)}
+                        className="px-6 py-2.5 bg-black text-white border-2 border-black rounded-full
+                        transition-all duration-200 ease-in-out
+                        hover:bg-white hover:text-black"
+                      >
+                        Call MCP
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleVisualize(item)}
+                        className="px-6 py-2.5 bg-black text-white border-2 border-black rounded-full
+                        transition-all duration-200 ease-in-out
+                        hover:bg-white hover:text-black"
+                      >
+                        View
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 };
