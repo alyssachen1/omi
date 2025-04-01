@@ -47,23 +47,21 @@ const ColorDescription = ({ color }) => {
   );
 };
 
-const PersonalityCard = ({ person }) => {
-  const dominantColor = person.suggested_color;
+// const PersonalityCard = ({ person }) => {
+//   const dominantColor = person.suggested_color;
   
-  return (
-    <div 
-      className="rounded-lg p-6 shadow-lg"
-      style={{
-        backgroundColor: `${colorMap[dominantColor]}`,
-        backdropFilter: 'blur(8px)',
-      }}
-    >
+//   return (
+//     <div 
+//       className="rounded-lg p-6 shadow-lg"
+//       style={{
+//         backgroundColor: `${colorMap[dominantColor]}`,
+//         backdropFilter: 'blur(8px)',
+//       }}
+//     >
       
-      {/* Add color description */}
-      <div className="mt-6 border-t border-gray-200 pt-4">
-        <h3 className="font-semibold mb-2">Color Personality</h3>
-        <ColorDescription color={dominantColor} />
-      </div>
-    </div>
-  );
-}; 
+//       {/* Add color description */}
+//       <div className="mt-6 border-t border-gray-200 pt-4">
+//         <h3 className="font-semibold mb-2">Color Personality</h3>
+//         <ColorDescription color={dominantColor} />
+//       </div>
+//     </div>

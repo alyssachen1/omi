@@ -17,6 +17,8 @@ import { PolarArea, Bubble } from 'react-chartjs-2';
 import { createRoot } from 'react-dom/client';
 import { FloatingBubbles } from "@/components/ui/floating-bubbles";
 import { TimelineChart } from "@/components/ui/timeline-chart";
+import { ColorDescription } from "@/components/ui/personality-card";
+// import { PersonalityCard } from "@/components/ui/personality-card";
 
 ChartJS.register(
   RadialLinearScale,
@@ -179,18 +181,6 @@ const polarData = {
   }]
 };
 
-const bubbleData = {
-  datasets: [{
-    label: 'Color Traits',
-    data: [
-      { x: 20, y: 30, r: 15 },
-      { x: 40, y: 10, r: 10 },
-      { x: 15, y: 50, r: 20 },
-    ],
-    backgroundColor: 'rgba(255, 99, 132, 0.5)'
-  }]
-};
-
 const axisOptions = {
   'expressiveness-diversity': {
     xLabel: 'Expressiveness',
@@ -344,7 +334,6 @@ const PersonalityCard = ({ person }) => {
     >
       <h2 className="text-xl font-bold mb-4">{person.name}</h2>
       
-      {/* Traits Section */}
       <div className="mb-4">
         <h3 className="font-semibold mb-2">Positive Traits</h3>
         <div className="flex flex-wrap gap-2">
