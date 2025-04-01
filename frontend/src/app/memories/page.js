@@ -167,12 +167,12 @@ const TableWithButton = () => {
           </thead>
           <tbody>
             {items.map((item) => (
-              <tr key={item.id} className="hover:bg-gray-50 align-top">
+              <tr key={item.id ?? index} className="hover:bg-gray-50 align-top">
                 <td className="px-2 py-2 border">{item.title || "-"}</td>
                 <td className="px-2 py-2 border">{item.overview || "-"}</td>
                 <td className="px-2 py-2 border max-w-xs whitespace-pre-wrap">
                   {item.showFullTranscript ||
-                  (item.transcript?.length || 0) <= 100 ? (
+                    (item.transcript?.length || 0) <= 100 ? (
                     item.transcript || "-"
                   ) : (
                     <>
