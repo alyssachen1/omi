@@ -82,7 +82,7 @@ ${transcript}
     return aiAnalysis;
   } catch (error) {
     console.error("❌ Error in AI processing:", error);
-    return { test: "bad" };
+    return {};
   }
 }
 
@@ -128,6 +128,7 @@ const TableWithButton = () => {
     const title = item.title;
     const transcript = item.transcript;
     const aiResponse = await processWithChatGPT(transcript);
+    console.log(title, transcript);
     console.log(aiResponse);
 
     // 2. Update local state
@@ -217,7 +218,6 @@ const TableWithButton = () => {
                     item.ai_analysis
                   ) : (
                     <button
-                      disabled
                       onClick={() => handleAnalyze(item)}
                       className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
                     >
@@ -227,12 +227,21 @@ const TableWithButton = () => {
                 </td>
 
                 <td className="px-2 py-2 border">
-                  <button
-                    onClick={() => handleVisualize(item)}
-                    className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 inline-block"
-                  >
-                    View
-                  </button>
+                  {item.ai_analysis != "{}" && item.ai_analysis ? (
+                    <button
+                      onClick={() => handleVisualize(item)}
+                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 inline-block"
+                    >
+                      View
+                    </button>
+                  ) : (
+                    <button
+                      disabled
+                      className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 inline-block"
+                    >
+                      View
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}
