@@ -206,6 +206,16 @@ const people2 = [
   },
 ];
 
+const styles = `
+  .group:hover .group-hover\\:border-transparent {
+    border-color: transparent;
+  }
+
+  [style*="--hover-bg"]:hover {
+    background-color: var(--hover-bg) !important;
+  }
+`;
+
 export default function AnimatedTooltipPreview() {
   const [question, setQuestion] = useState("");
   const [isClient, setIsClient] = useState(false);
@@ -390,14 +400,14 @@ export default function AnimatedTooltipPreview() {
 
   const selectedAxis = axisOptions[axisMode];
 
-  const getDominantColor = (person) => {
-    if (!person.color_matches) return "rgba(200, 200, 200, 0.5)"; // default color is gray
+  const getDominantColorRGB = (person) => {
+    if (!person.color_matches) return "rgba(200, 200, 200, 0.3)"; // default color with opacity
 
     const colors = {
-      Yellow: "rgba(255, 206, 86, 0.5)",
-      Blue: "rgba(54, 162, 235, 0.5)",
-      Red: "rgba(255, 99, 132, 0.5)",
-      Green: "rgba(75, 192, 192, 0.5)",
+      Yellow: "rgba(255, 206, 86, 0.3)",  // reduced opacity to 0.3
+      Blue: "rgba(54, 162, 235, 0.3)",
+      Red: "rgba(255, 99, 132, 0.3)",
+      Green: "rgba(75, 192, 192, 0.3)",
     };
 
     const dominant = Object.entries(person.color_matches).reduce((a, b) =>
@@ -436,7 +446,7 @@ export default function AnimatedTooltipPreview() {
       {
         label: "Color Traits",
         data: people ? people.map((p) => selectedAxis.computeXY(p)) : [],
-        backgroundColor: people ? people.map((p) => getDominantColor(p)) : [],
+        backgroundColor: people ? people.map((p) => getDominantColorRGB(p)) : [],
       },
     ],
   };
@@ -447,7 +457,7 @@ export default function AnimatedTooltipPreview() {
 
   useEffect(() => {
     const styleSheet = document.createElement("style");
-    styleSheet.innerText = tooltipStyles;
+    styleSheet.innerText = tooltipStyles + styles;
     document.head.appendChild(styleSheet);
     setIsClient(true);
 
@@ -477,12 +487,30 @@ export default function AnimatedTooltipPreview() {
       <main className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex justify-center items-center mb-8">
           <AnimatedTooltip items={people} onItemClick={handlePersonClick}>
-            {item => (
-              <span
-                className={`${inter.className} text-sm font-medium text-white/100`}
+            {(item) => (
+              <div
+                className="w-24 h-24 flex items-center justify-center rounded-full 
+                  border border-black/20 bg-white text-black transition-all duration-300
+                  hover:text-white"
+                style={{
+                  backgroundColor: 'white',
+                  ':hover': {
+                    backgroundColor: getDominantColorRGB(item),
+                  }
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = getDominantColorRGB(item);
+                  e.currentTarget.style.borderColor = getDominantColorRGB(item);
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'white';
+                  e.currentTarget.style.borderColor = 'rgba(0, 0, 0, 0.2)';
+                }}
               >
-                {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
-              </span>
+                <span className="text-sm font-medium">
+                  {item.name.charAt(0).toUpperCase() + item.name.slice(1)}
+                </span>
+              </div>
             )}
           </AnimatedTooltip>
         </div>
@@ -522,15 +550,25 @@ export default function AnimatedTooltipPreview() {
                     ...bubbleOptions,
                     plugins: {
                       legend: {
-                        display: false, // 👈 disables the legend
+                        display: false,
                       },
                       tooltip: {
                         callbacks: {
                           label: (context) => {
-                            const { x, y } = context.raw;
-                            return [`X: ${x}`, `Y: ${y}`];
+                            const personIndex = context.dataIndex;
+                            const person = people[personIndex];
+                            return person.name.charAt(0).toUpperCase() + person.name.slice(1);
                           },
                         },
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        padding: 12,
+                        titleFont: {
+                          size: 14
+                        },
+                        bodyFont: {
+                          size: 14
+                        },
+                        displayColors: false,  // Removes the color box in the tooltip
                       },
                     },
                   }}
@@ -591,3 +629,4 @@ export default function AnimatedTooltipPreview() {
     </div>
   );
 }
+
