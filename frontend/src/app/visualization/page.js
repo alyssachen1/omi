@@ -157,34 +157,6 @@ const people = [
   },
 ];
 
-const polarData = {
-  labels: ["Yellow", "Blue", "Red", "Green"],
-  datasets: [
-    {
-      label: "Color Distribution",
-      data: people
-        .filter((p) => p.color_matches) // do we only include people with color_matches ?
-        .map((p) => [
-          p.color_matches.Yellow || 0,
-          p.color_matches.Blue || 0,
-          p.color_matches.Red || 0,
-          p.color_matches.Green || 0,
-        ])
-        .reduce(
-          (acc, curr) => curr.map((num, idx) => (acc[idx] || 0) + num),
-          [0, 0, 0, 0]
-        ),
-      backgroundColor: [
-        "rgba(255, 206, 86, 0.5)",
-        "rgba(54, 162, 235, 0.5)",
-        "rgba(255, 99, 132, 0.5)",
-        "rgba(75, 192, 192, 0.5)",
-      ],
-      borderWidth: 1,
-    },
-  ],
-};
-
 const axisOptions = {
   "expressiveness-diversity": {
     xLabel: "Expressiveness",
@@ -476,7 +448,29 @@ export default function AnimatedTooltipPreview() {
               <div className="h-[calc(100%-2rem)] flex items-center justify-center">
                 <PolarArea 
                   data={getPolarData(selectedPerson)}
-                  options={chartOptions}
+                  options={{
+                    ...chartOptions,
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                      r: {  
+                        max: 100,
+                        beginAtZero: true,
+                      }
+                    },
+                    animation: {
+                      animateRotate: true,
+                      animateScale: true
+                    },
+                    plugins: {
+                      tooltip: {
+                        enabled: false
+                      },
+                      legend: {
+                        display: true
+                      }
+                    }
+                  }}
                 />
               </div>
             </div>
