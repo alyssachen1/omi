@@ -18,10 +18,11 @@ export const FloatingBubbles = () => {
 
     let bubbles = []
     const colors = [
-      'rgba(255, 206, 86, 0.5)', 
-      'rgba(54, 162, 235, 0.5)', 
-      'rgba(255, 99, 132, 0.5)',  
-      'rgba(75, 192, 192, 0.5)' 
+      'rgba(131, 168, 238, 0.3)', 
+      'rgba(210, 137, 244, 0.5)', 
+      'rgba(255, 99, 133, 0.4)',  
+      'rgba(63, 206, 234, 0.5)',
+      'rgba(241, 102, 195, 0.3)' 
     ]
 
     // creating bubbles
