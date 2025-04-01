@@ -342,11 +342,11 @@ export default function AnimatedTooltipPreview() {
         label: "Color Distribution",
         data: person
           ? [
-              person.color_matches.Yellow || 0,
-              person.color_matches.Blue || 0,
-              person.color_matches.Red || 0,
-              person.color_matches.Green || 0,
-            ]
+            person.color_matches.Yellow || 0,
+            person.color_matches.Blue || 0,
+            person.color_matches.Red || 0,
+            person.color_matches.Green || 0,
+          ]
           : [0, 0, 0, 0],
         backgroundColor: [
           "rgba(255, 206, 86, 0.5)", // yellow

@@ -17,15 +17,14 @@ export default function Homepage() {
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
           <button
-            className="px-4 py-2 text-sm font-medium rounded-md text-white transition-opacity opacity-80 hover:opacity-100"
-            style={{ backgroundColor: "rgba(63, 206, 234, 0.5)" }}
+            className="px-6 py-2 text-sm font-medium rounded-md transition-opacity opacity-90 hover:opacity-100 w-32 h-10 flex items-center justify-center relative overflow-hidden"
+            style={{ backgroundColor: "black" }}
           >
-            Sync Omi
+            <span className="mix-blend-difference text-white">Sync Omi</span>
           </button>
-
           <Link href="/memories">
-            <button className="px-4 py-2 text-black hover:bg-white/10 rounded-lg transition duration-200">
-              View Memories
+            <button className="px-6 py-2 text-black hover:bg-white/10 rounded-md transition duration-200 border-2 border-black/100 w-32 h-10 flex items-center justify-center">
+              Memories
             </button>
           </Link>
         </div>
