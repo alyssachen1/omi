@@ -36,126 +36,126 @@ const inter = Inter({
   display: "swap",
 });
 
-// const people = [
-//   {
-//     id: 1,
-//     name: "aly",
-//     suggested_color: "Yellow",
-//     color_matches: {
-//       Yellow: 60,
-//       Blue: 20,
-//       Red: 10,
-//       Green: 10,
-//     },
-//     pos_traits: ["Happiness", "Optimism", "Creativity"],
-//     neg_traits: ["Impulsive", "Scattered"],
-//     keywords: ["energy", "communication", "happiness"],
-//     interactions: [
-//       {
-//         date: "2025-04-01",
-//         dominantColor: "Yellow",
-//         wordCount: 100,
-//         color_matches: {
-//           Yellow: 60,
-//           Blue: 20,
-//           Red: 10,
-//           Green: 10,
-//         },
-//       },
-//     ],
-//     stats: {
-//       totalInteractions: 1,
-//       lastMessage: "2025-04-01",
-//       avgWordsPerSession: 100,
-//       colorShifts: 0,
-//       colorTimeline: "Yellow",
-//     },
-//   },
-//   {
-//     id: 2,
-//     name: "tomster",
-//     suggested_color: "Green",
-//     color_matches: {
-//       Yellow: 20,
-//       Blue: 10,
-//       Red: 10,
-//       Green: 60,
-//     },
-//     pos_traits: ["Calm", "Growth", "Balance"],
-//     neg_traits: ["Indecisive"],
-//     keywords: ["harmony"],
-//     interactions: [
-//       {
-//         date: "2024-01-15",
-//         dominantColor: "Yellow",
-//         wordCount: 120,
-//         color_matches: {
-//           Yellow: 60,
-//           Blue: 20,
-//           Red: 10,
-//           Green: 10,
-//         },
-//       },
-//       {
-//         date: "2024-02-10",
-//         dominantColor: "Yellow",
-//         wordCount: 120,
-//         color_matches: {
-//           Yellow: 60,
-//           Blue: 20,
-//           Red: 10,
-//           Green: 10,
-//         },
-//       },
-//       {
-//         date: "2024-04-14",
-//         dominantColor: "Green",
-//         wordCount: 100,
-//         color_matches: {
-//           Yellow: 20,
-//           Blue: 10,
-//           Red: 10,
-//           Green: 60,
-//         },
-//       },
-//     ],
-//     stats: {
-//       totalInteractions: 3,
-//       lastMessage: "2024-04-14",
-//       avgWordsPerSession: 120,
-//       colorShifts: 2,
-//       colorTimeline: "Yellow → Green",
-//     },
-//   },
-//   {
-//     id: 3,
-//     name: "kevin",
-//     suggested_color: "Red",
-//     color_matches: {
-//       Yellow: 10,
-//       Blue: 20,
-//       Red: 60,
-//       Green: 10,
-//     },
-//     pos_traits: ["Leadership", "Action", "Confidence"],
-//     neg_traits: ["Aggressive", "Impatient", "Dominant"],
-//     keywords: ["power", "drive"],
-//   },
-//   {
-//     id: 4,
-//     name: "trevor",
-//     suggested_color: "Blue",
-//     color_matches: {
-//       Yellow: 10,
-//       Blue: 60,
-//       Red: 20,
-//       Green: 10,
-//     },
-//     pos_traits: ["Trust", "Depth", "Loyalty"],
-//     neg_traits: ["Withdrawn", "Overcautious"],
-//     keywords: ["stability", "peace"],
-//   },
-// ];
+const people2 = [
+  {
+    id: 1,
+    name: "aly",
+    suggested_color: "Yellow",
+    color_matches: {
+      Yellow: 60,
+      Blue: 20,
+      Red: 10,
+      Green: 10,
+    },
+    pos_traits: ["Happiness", "Optimism", "Creativity"],
+    neg_traits: ["Impulsive", "Scattered"],
+    keywords: ["energy", "communication", "happiness"],
+    interactions: [
+      {
+        date: "2025-04-01",
+        dominantColor: "Yellow",
+        wordCount: 100,
+        color_matches: {
+          Yellow: 60,
+          Blue: 20,
+          Red: 10,
+          Green: 10,
+        },
+      },
+    ],
+    stats: {
+      totalInteractions: 1,
+      lastMessage: "2025-04-01",
+      avgWordsPerSession: 100,
+      colorShifts: 0,
+      colorTimeline: "Yellow",
+    },
+  },
+  {
+    id: 2,
+    name: "tomster",
+    suggested_color: "Green",
+    color_matches: {
+      Yellow: 20,
+      Blue: 10,
+      Red: 10,
+      Green: 60,
+    },
+    pos_traits: ["Calm", "Growth", "Balance"],
+    neg_traits: ["Indecisive"],
+    keywords: ["harmony"],
+    interactions: [
+      {
+        date: "2024-01-15",
+        dominantColor: "Yellow",
+        wordCount: 120,
+        color_matches: {
+          Yellow: 60,
+          Blue: 20,
+          Red: 10,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-02-10",
+        dominantColor: "Yellow",
+        wordCount: 120,
+        color_matches: {
+          Yellow: 60,
+          Blue: 20,
+          Red: 10,
+          Green: 10,
+        },
+      },
+      {
+        date: "2024-04-14",
+        dominantColor: "Green",
+        wordCount: 100,
+        color_matches: {
+          Yellow: 20,
+          Blue: 10,
+          Red: 10,
+          Green: 60,
+        },
+      },
+    ],
+    stats: {
+      totalInteractions: 3,
+      lastMessage: "2024-04-14",
+      avgWordsPerSession: 120,
+      colorShifts: 2,
+      colorTimeline: "Yellow → Green",
+    },
+  },
+  {
+    id: 3,
+    name: "kevin",
+    suggested_color: "Red",
+    color_matches: {
+      Yellow: 10,
+      Blue: 20,
+      Red: 60,
+      Green: 10,
+    },
+    pos_traits: ["Leadership", "Action", "Confidence"],
+    neg_traits: ["Aggressive", "Impatient", "Dominant"],
+    keywords: ["power", "drive"],
+  },
+  {
+    id: 4,
+    name: "trevor",
+    suggested_color: "Blue",
+    color_matches: {
+      Yellow: 10,
+      Blue: 60,
+      Red: 20,
+      Green: 10,
+    },
+    pos_traits: ["Trust", "Depth", "Loyalty"],
+    neg_traits: ["Withdrawn", "Overcautious"],
+    keywords: ["stability", "peace"],
+  },
+];
 
 export default function AnimatedTooltipPreview() {
   const [question, setQuestion] = useState("");
@@ -342,11 +342,11 @@ export default function AnimatedTooltipPreview() {
         label: "Color Distribution",
         data: person
           ? [
-            person.color_matches.Yellow || 0,
-            person.color_matches.Blue || 0,
-            person.color_matches.Red || 0,
-            person.color_matches.Green || 0,
-          ]
+              person.color_matches.Yellow || 0,
+              person.color_matches.Blue || 0,
+              person.color_matches.Red || 0,
+              person.color_matches.Green || 0,
+            ]
           : [0, 0, 0, 0],
         backgroundColor: [
           "rgba(255, 206, 86, 0.5)", // yellow
