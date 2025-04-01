@@ -1,3 +1,18 @@
+'use client';
+
+const colorMap = {
+  'Yellow': 'rgba(255, 206, 86, 0.5)',
+  'Blue': 'rgba(54, 162, 235, 0.5)',
+  'Red': 'rgba(255, 99, 132, 0.5)',
+  'Green': 'rgba(75, 192, 192, 0.5)',
+  'Orange': 'rgba(255, 198, 140, 1)',
+  'Gray': 'rgba(200, 200, 200, 1)',
+  'Black': 'rgba(0, 0, 0, 0.5)',
+  'Pink': 'rgba(255, 182, 193, 0.5)',
+  'Purple': 'rgba(147, 112, 219, 0.5)',
+  'White': 'rgba(255, 255, 255, 0.5)'
+};
+
 const ColorDescription = ({ color }) => {
   const descriptions = {
     Yellow: `Yellow is the color of happiness, optimism, creativity, and intellect. It is bright and cheerful, known to stimulate mental activity, sharpen memory, and energize the spirit. Yellow inspires communication and encourages playfulness, curiosity, and learning. It's a mentally activating hue associated with innovative thinking and mental clarity.
@@ -35,33 +50,98 @@ const ColorDescription = ({ color }) => {
   };
 
   return (
-    <div className="flex items-center gap-4 mt-4">
-      <Image 
-        src={`/images/color-icons/${color.toLowerCase()}-icon.png`}
-        alt={`${color} icon`}
-        width={40}
-        height={40}
-      />
-      <p className="text-sm">{descriptions[color]}</p>
+    <div className="mt-4">
+      <p className="text-sm leading-relaxed">{descriptions[color] || 'Description not available.'}</p>
     </div>
   );
 };
 
-// const PersonalityCard = ({ person }) => {
-//   const dominantColor = person.suggested_color;
-  
-//   return (
-//     <div 
-//       className="rounded-lg p-6 shadow-lg"
-//       style={{
-//         backgroundColor: `${colorMap[dominantColor]}`,
-//         backdropFilter: 'blur(8px)',
-//       }}
-//     >
+export const PersonalityCard = ({ person }) => {
+  if (!person) return null;
+
+  const baseColor = colorMap[person.suggested_color] || colorMap.Gray;
+  const backgroundColor = baseColor.replace('0.5', '0.3');
+
+  return (
+    <div 
+      className="rounded-lg p-6 shadow-lg"
+      style={{
+        backgroundColor: backgroundColor,
+        backdropFilter: 'blur(8px)',
+      }}
+    >
+      <h2 className="text-xl font-bold mb-4">{person.name}</h2>
       
-//       {/* Add color description */}
-//       <div className="mt-6 border-t border-gray-200 pt-4">
-//         <h3 className="font-semibold mb-2">Color Personality</h3>
-//         <ColorDescription color={dominantColor} />
-//       </div>
-//     </div>
+      {/* Positive Traits */}
+      <div className="mb-4">
+        <h3 className="font-semibold mb-2">Positive Traits</h3>
+        <div className="flex flex-wrap gap-2">
+          {person.pos_traits.map((trait, index) => (
+            <span key={index} className="px-2 py-1 bg-white/50 rounded-full text-sm">
+              {trait}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Negative Traits */}
+      <div className="mb-4">
+        <h3 className="font-semibold mb-2">Negative Traits</h3>
+        <div className="flex flex-wrap gap-2">
+          {person.neg_traits.map((trait, index) => (
+            <span key={index} className="px-2 py-1 bg-white/50 rounded-full text-sm">
+              {trait}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* Color Distribution */}
+      <div className="mb-4">
+        <h3 className="font-semibold mb-2">Color Distribution</h3>
+        {Object.entries(person.color_matches).map(([color, percentage]) => (
+          <div key={color} className="flex items-center gap-2 mb-1">
+            <span className="text-sm">{color}:</span>
+            <div className="flex-1 h-2 bg-white/30 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-white/50 rounded-full"
+                style={{ width: `${percentage}%` }}
+              />
+            </div>
+            <span className="text-sm">{percentage}%</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Stats Section */}
+      {person.stats && (
+        <div className="mt-4 pt-4 border-t border-white/30">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <p className="text-sm opacity-75">Total Interactions</p>
+              <p className="font-semibold">{person.stats.totalInteractions}</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-75">Last Interaction</p>
+              <p className="font-semibold">{person.stats.lastMessage}</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-75">Avg Words/Session</p>
+              <p className="font-semibold">{person.stats.avgWordsPerSession}</p>
+            </div>
+            <div>
+              <p className="text-sm opacity-75">Color Shifts</p>
+              <p className="font-semibold">{person.stats.colorShifts}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Color Description */}
+      <div className="mt-6 border-t border-white/30 pt-4">
+        <h3 className="font-semibold mb-2">Color Personality</h3>
+        <ColorDescription color={person.suggested_color} />
+      </div>
+    </div>
+  );
+};
