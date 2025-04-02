@@ -24,12 +24,77 @@ const openai = new OpenAI({
 });
 
 async function processWithChatGPT(transcript) {
-  const prompt = `Analyze: ${transcript}`;
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4",
-    messages: [{ role: "user", content: prompt }],
-  });
-  return JSON.parse(completion.choices[0].message.content || "{}");
+  try {
+    const prompt = `
+Given this transcript, can you extrapolate the speakers and then put them into this array of objects with the following format.
+
+Format: [{
+  "id": 1,
+  "name": "aly",
+  "suggested_color": "Yellow",
+  "color_matches": {
+    "Yellow": 60,
+    "Blue": 20,
+    "Red": 10,
+    "Green": 10
+  },
+  "pos_traits": ["Happiness", "Optimism", "Creativity"],
+  "neg_traits": ["Impulsive", "Scattered"],
+  "keywords": ["energy", "communication", "happiness"],
+  "interactions": [
+    {
+      "date": "2025-04-01",
+      "dominantColor": "Yellow",
+      "wordCount": 100,
+      "color_matches": {
+        "Yellow": 60,
+        "Blue": 20,
+        "Red": 10,
+        "Green": 10
+      }
+    }
+  ],
+  "stats": {
+    "totalInteractions": 1,
+    "lastMessage": "2025-04-01",
+    "avgWordsPerSession": 100,
+    "colorShifts": 0,
+    "colorTimeline": "Yellow"
+  }
+  }]
+
+Transcript:
+${transcript}
+    `;
+
+    console.log(prompt);
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are an AI assistant that analyzes conversation transcripts and provides structured insights. Only respond with the array and don't add ```json",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      temperature: 0.7,
+      max_tokens: 1000,
+    });
+
+    console.log(completion);
+
+    const aiAnalysis = JSON.parse(completion.choices[0].message.content);
+    console.log("✨ AI Analysis completed successfully");
+    return aiAnalysis;
+  } catch (error) {
+    console.error("❌ Error in AI processing:", error);
+    return {};
+  }
 }
 
 const formatTranscript = (text) => {
@@ -63,15 +128,20 @@ const TableWithButton = () => {
 
   const handleAnalyze = async (item) => {
     const aiResponse = await processWithChatGPT(item.transcript);
+    console.log(aiResponse);
+    const aiThing = aiResponse.speakers || aiResponse;
+
     const { error } = await supabase
       .from("transcripts")
-      .update({ ai_analysis: aiResponse })
-      .eq("id", item.id);
+      .update({ ai_analysis: JSON.stringify(aiThing, null, 2) })
+      .eq("title", item.title);
 
     if (!error) {
       setItems((prev) =>
         prev.map((i) =>
-          i.id === item.id ? { ...i, ai_analysis: aiResponse } : i
+          i.title === item.title
+            ? { ...i, ai_analysis: JSON.stringify(aiThing, null, 2) }
+            : i
         )
       );
     }

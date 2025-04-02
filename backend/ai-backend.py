@@ -5,16 +5,24 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 from openai import OpenAI
+import requests
+import time
 
-# 🔄 Load environment variables
+# Load environment variables
 load_dotenv()
 
 SUPABASE_URL = os.getenv("SUPABASE_URL")
 SUPABASE_KEY = os.getenv("SUPABASE_KEY")
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+HUME_API_KEY = os.getenv("HUME_API_KEY")
+HUME_MCP_URL = os.getenv("HUME_MCP_URL")  # e.g. "https://api.hume.ai/v0/mcp"
 
 supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-openai_client = OpenAI(api_key=OPENAI_API_KEY) 
+openai_client = OpenAI(api_key=OPENAI_API_KEY)
+
+app = Flask(__name__)
+
+# Example format for prompt
 TEST_OBJECT = {
     "id": 1,
     "name": "aly",
@@ -50,30 +58,62 @@ TEST_OBJECT = {
     },
 }
 
-app = Flask(__name__)
+def get_hume_emotions(transcript_text):
+    try:
+        headers = {
+            "Authorization": f"Bearer {HUME_API_KEY}",
+            "Content-Type": "application/json"
+        }
+        payload = {
+            "data": {
+                "text": transcript_text
+            },
+            "models": {
+                "language": {}
+            }
+        }
 
-def process_with_chatgpt(title: str, overview: str, transcript: str) -> dict:
-    """Process the transcript with ChatGPT to get AI insights."""
+        response = requests.post(HUME_MCP_URL, json=payload, headers=headers)
+        response.raise_for_status()
+
+        job = response.json()
+        job_id = job["job_id"]
+
+        # Poll for completion
+        for _ in range(30):
+            status_response = requests.get(f"{HUME_MCP_URL}/{job_id}", headers=headers)
+            status_json = status_response.json()
+            if status_json.get("status") == "done":
+                return status_json.get("results", {})
+            time.sleep(1)
+
+        print("⚠️ Hume API timed out.")
+        return {}
+
+    except Exception as e:
+        print("❌ Error calling Hume MCP:", e)
+        return {}
+
+def process_with_chatgpt(title: str, overview: str, transcript: str, hume_data: dict = None) -> dict:
     try:
         prompt = f"""
-
-        Given this transcript, can you extrapolate the speakers and then put them into this array of objects with the following format. Please only respond with the json file.
+        Given this transcript, and optionally any emotional insights, can you extrapolate the speakers and then put them into this array of objects with the following format? Please only respond with the json file.
 
         Format: {TEST_OBJECT}
         Transcript: {transcript}
+        Emotional Analysis (optional): {json.dumps(hume_data or {}, indent=2)}
         """
 
         response = openai_client.chat.completions.create(
-            model="gpt-4",  # or "gpt-3.5-turbo" for a more economical option
+            model="gpt-4",
             messages=[
                 {"role": "system", "content": "You are an AI that analyzes and formats conversations. Always respond in valid JSON format."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7,
-            max_tokens=1000
+            max_tokens=1200
         )
 
-        # Parse the JSON response
         ai_analysis = json.loads(response.choices[0].message.content)
         print("✨ AI Analysis completed successfully")
         return ai_analysis
@@ -103,19 +143,23 @@ def simplify_transcript(json_data):
         transcript = "\n".join(transcript_lines)
 
         if not any([title, overview, transcript]):
-          print("⚠️ Simplified content is empty — skipping upload.")
-          return {}
+            print("⚠️ Simplified content is empty — skipping upload.")
+            return {}
 
-        # Get AI analysis
-        ai_results = process_with_chatgpt(title, overview, transcript)
+        # Get Hume emotion insights
+        hume_results = get_hume_emotions(transcript)
+
+        # Get AI analysis from OpenAI + Hume data
+        ai_results = process_with_chatgpt(title, overview, transcript, hume_data=hume_results)
 
         return {
             "title": title,
             "overview": overview,
             "transcript": transcript,
             "created_at": datetime.utcnow().isoformat(),
-            "ai_analysis": ai_results  # Add AI analysis to the object
+            "ai_analysis": ai_results
         }
+
     except Exception as e:
         print("❌ Error simplifying transcript:", e)
         return None
@@ -131,7 +175,7 @@ def webhook():
             print("🧠 Simplified JSON with AI analysis:")
             print(json.dumps(simplified, indent=2))
 
-            # 🔼 Upload to Supabase
+            # Upload to Supabase
             response = supabase.table("transcripts").insert(simplified).execute()
             print("📤 Uploaded to Supabase:", response)
         else:
