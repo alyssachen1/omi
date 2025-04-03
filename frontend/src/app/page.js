@@ -3,11 +3,13 @@
 import React from "react";
 import Link from "next/link";
 import { FloatingBubbles } from "../components/ui/floating-bubbles";
+import { SplashCursor } from "@/components/ui/splash-cursor";
 
 export default function Homepage() {
   return (
     <div className="w-screen h-screen overflow-hidden relative">
-      <FloatingBubbles />
+      <SplashCursor className="absolute top-0 left-0" />
+      
       <div className="absolute inset-0 flex items-center flex-col justify-center px-4 md:px-10 w-full h-full z-10">
         <h2 className="text-black text-2xl md:text-6xl font-bold text-center">
           The Color Theory
