@@ -33,3 +33,37 @@
 .card:hover {
   transform: scale(1.05);
 }
+
+/* Base styles for the personality card */
+.personality-card {
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  background-color: #f9f9f9; /* Adjust as needed */
+}
+
+/* Media query for mobile screens */
+@media (max-width: 640px) {
+  .personality-card {
+    padding: 1rem; /* Reduce padding */
+    font-size: 0.875rem; /* Scale down font size */
+  }
+
+  .personality-card h2 {
+    font-size: 1.5rem; /* Scale down title */
+  }
+
+  .personality-card h3 {
+    font-size: 1rem; /* Scale down section titles */
+  }
+
+  .flex {
+    flex-direction: column; /* Stack elements vertically */
+  }
+
+  .absolute {
+    position: relative; /* Change absolute positioning to relative on mobile */
+    bottom: auto; /* Reset bottom positioning */
+    right: auto; /* Reset right positioning */
+    margin-top: 1rem; /* Add margin to separate from content */
+  }
+}

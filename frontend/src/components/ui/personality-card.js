@@ -36,7 +36,7 @@ const ColorDescription = ({ color }) => {
 
   return (
     <div className="mt-4">
-      <p className="text-sm leading-relaxed">{descriptions[color] || 'Description not available.'}</p>
+      <p className="text-xs md:text-sm leading-relaxed">{descriptions[color] || 'Description not available.'}</p>
     </div>
   );
 };
@@ -49,24 +49,24 @@ export const PersonalityCard = ({ person }) => {
 
   return (
     <div
-      className="h-[500px] rounded-lg p-6 shadow-lg overflow-y-auto"
+      className="h-[400px] rounded-lg p-4 shadow-lg overflow-y-auto"
       style={{
         backgroundColor: backgroundColor,
         backdropFilter: 'blur(8px)',
       }}
     >
-      <h2 className="text-3xl font-bold mb-6">
+      <h2 className="text-2xl md:text-3xl font-bold mb-4">
         {person.name.charAt(0).toUpperCase() + person.name.slice(1)}
       </h2>
 
       {/* Positive Traits */}
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Positive Traits</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="mb-2">
+        <h3 className="font-semibold text-md md:text-lg mb-1">Positive Traits</h3>
+        <div className="flex flex-wrap gap-1">
           {person.pos_traits.map((trait, index) => (
             <span
               key={index}
-              className="px-3 py-2 bg-white/50 rounded-full text-base transition-colors duration-300 hover:bg-black hover:text-white"
+              className="px-2 py-1 bg-white/50 rounded-full text-xs md:text-sm transition-colors duration-300 hover:bg-black hover:text-white"
             >
               {trait}
             </span>
@@ -75,13 +75,13 @@ export const PersonalityCard = ({ person }) => {
       </div>
 
       {/* Negative Traits */}
-      <div className="mb-4">
-        <h3 className="font-semibold mb-2">Negative Traits</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="mb-2">
+        <h3 className="font-semibold text-md md:text-lg mb-1">Negative Traits</h3>
+        <div className="flex flex-wrap gap-1">
           {person.neg_traits.map((trait, index) => (
             <span
               key={index}
-              className="px-3 py-2 bg-white/50 rounded-full text-base transition-colors duration-300 hover:bg-black hover:text-white"
+              className="px-2 py-1 bg-white/50 rounded-full text-xs md:text-sm transition-colors duration-300 hover:bg-black hover:text-white"
             >
               {trait}
             </span>
@@ -90,8 +90,8 @@ export const PersonalityCard = ({ person }) => {
       </div>
 
       {/* Color Personality */}
-      <div className="mt-6">
-        <h3 className="font-semibold mb-2">Color Personality</h3>
+      <div className="mt-4">
+        <h3 className="font-semibold text-md md:text-lg mb-1">Color Personality</h3>
         <ColorDescription color={person.suggested_color} />
       </div>
     </div>

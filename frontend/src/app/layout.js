@@ -20,16 +20,16 @@ export default function RootLayout({ children }) {
       <body>
         {showHeader && (
           <header className="bg-white shadow-sm">
-            <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 relative flex items-center">
+            <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex items-center justify-between">
               {pathname === "/visualization" ? (
                 <>
                   <Link
                     href="/memories"
-                    className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0 ml-4"
+                    className="text-gray-800 hover:text-gray-600 transition-colors flex items-center"
                   >
-                    ← Back to Memories Database
+                    ← Back
                   </Link>
-                  <h1 className="text-2xl font-bold text-gray-900 w-full text-center">
+                  <h1 className="text-2xl font-bold text-gray-900 text-center flex-1">
                     Visualization Data
                   </h1>
                 </>
@@ -37,11 +37,11 @@ export default function RootLayout({ children }) {
                 <>
                   <Link
                     href="/"
-                    className="text-gray-800 hover:text-gray-600 transition-colors absolute left-0 ml-4"
+                    className="text-gray-800 hover:text-gray-600 transition-colors flex items-center"
                   >
-                    ← Back to Homepage
+                    ← Back
                   </Link>
-                  <h1 className="text-2xl font-bold text-gray-900 w-full text-center">
+                  <h1 className="text-2xl font-bold text-gray-900 text-center flex-1">
                     Memories Database
                   </h1>
                 </>

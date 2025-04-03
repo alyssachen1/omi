@@ -183,17 +183,17 @@ const TableWithButton = () => {
                   key={item.id}
                   whileHover={{ scale: 1.03 }}
                   transition={{ duration: 0.2 }}
-                  className="bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-sm relative min-h-[400px] border border-white/20"
+                  className="bg-white/90 backdrop-blur-sm rounded-lg p-6 shadow-sm relative min-h-[400px] border border-white/20 flex flex-col"
                 >
-                  <div className="h-[160px] mb-8">
+                  <div className="h-[160px] mb-4 flex-1">
                     <h2 className="text-xl font-semibold mb-3">
                       {item.title || "-"}
                     </h2>
                     <div>
-                      <p className="text-gray-600 mb-2">
+                      <p className="text-gray-600 mb-3 text-sm md:text-base">
                         {item.overview || "-"}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-gray-500 text-sm md:text-sm mb-6">
                         {item.created_at
                           ? new Date(item.created_at).toLocaleString()
                           : "-"}
@@ -201,22 +201,22 @@ const TableWithButton = () => {
                     </div>
                   </div>
 
-                  <div className="pb-16">
+                  <div className="pb-2 flex-0">
                     <Accordion type="multiple" className="space-y-4">
                       <AccordionItem value="transcript">
-                        <AccordionTrigger className="flex justify-between w-full">
+                        <AccordionTrigger className="flex justify-between w-full mb-4">
                           Transcript
                         </AccordionTrigger>
-                        <AccordionContent className="mt-4">
+                        <AccordionContent className="mt-2">
                           {formatTranscript(item.transcript)}
                         </AccordionContent>
                       </AccordionItem>
 
                       <AccordionItem value="analysis">
-                        <AccordionTrigger className="flex justify-between w-full">
+                        <AccordionTrigger className="flex justify-between w-full mb-18">
                           AI Analysis
                         </AccordionTrigger>
-                        <AccordionContent className="mt-4">
+                        <AccordionContent className="mt-2">
                           {item.ai_analysis != "{}" && item.ai_analysis ? (
                             <div className="text-gray-600">
                               {typeof item.ai_analysis === "string"
@@ -233,7 +233,7 @@ const TableWithButton = () => {
                     </Accordion>
                   </div>
 
-                  <div className="absolute bottom-6 right-6">
+                  <div className="absolute bottom-10 right-6 flex-shrink-0">
                     {!item.ai_analysis || item.ai_analysis === "{}" ? (
                       <button
                         onClick={() => handleAnalyze(item)}

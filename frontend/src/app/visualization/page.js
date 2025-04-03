@@ -508,6 +508,10 @@ export default function AnimatedTooltipPreview() {
     setSelectedPerson(person);
   };
 
+  const handleAxisChange = (axis) => {
+    setAxisMode(axis);
+  };
+
   useEffect(() => {
     const styleSheet = document.createElement("style");
     styleSheet.innerText = tooltipStyles + styles;
@@ -568,7 +572,7 @@ export default function AnimatedTooltipPreview() {
           </AnimatedTooltip>
         </div>
 
-        <div className="grid grid-cols-2 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           {selectedPerson && (
             <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.2 }}>
               <PersonalityCard person={selectedPerson} />
@@ -580,20 +584,20 @@ export default function AnimatedTooltipPreview() {
               <h2 className="text-xl font-semibold mb-4 text-center">Color Traits Map</h2>
               <div className="flex gap-2 mb-4 justify-center">
                 <button
-                  className="px-4 py-2 text-sm font-medium rounded-md bg-white text-black border border-black transition-colors hover:bg-black hover:text-white hover:border-transparent"
-                  onClick={() => setAxisMode("expressiveness-diversity")}
+                  className={`px-4 py-2 text-xs font-small rounded-md ${axisMode === "expressiveness-diversity" ? 'bg-black text-white' : 'bg-white text-black border border-black'} transition-colors`}
+                  onClick={() => handleAxisChange("expressiveness-diversity")}
                 >
                   Expressiveness vs Reserved
                 </button>
                 <button
-                  className="px-4 py-2 text-sm font-medium rounded-md bg-white text-black border border-black transition-colors hover:bg-black hover:text-white hover:border-transparent"
-                  onClick={() => setAxisMode("proactive-reactive")}
+                  className={`px-4 py-2 text-xs font-small rounded-md ${axisMode === "proactive-reactive" ? 'bg-black text-white' : 'bg-white text-black border border-black'} transition-colors`}
+                  onClick={() => handleAxisChange("proactive-reactive")}
                 >
                   Proactive vs Reactive
                 </button>
                 <button
-                  className="px-4 py-2 text-sm font-medium rounded-md bg-white text-black border border-black transition-colors hover:bg-black hover:text-white hover:border-transparent"
-                  onClick={() => setAxisMode("positive-negative")}
+                  className={`px-4 py-2 text-xs font-small rounded-md ${axisMode === "positive-negative" ? 'bg-black text-white' : 'bg-white text-black border border-black'} transition-colors`}
+                  onClick={() => handleAxisChange("positive-negative")}
                 >
                   Pos vs Neg Traits
                 </button>
@@ -636,8 +640,8 @@ export default function AnimatedTooltipPreview() {
 
         {/* Personality Card and Polar Chart */}
         {selectedPerson && (
-          <div className="grid grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow h-[500px] flex flex-col transition-transform duration-200 hover:scale-105">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white p-6 rounded-lg shadow h-auto flex flex-col transition-transform duration-200 hover:scale-105">
               <h2 className="text-xl font-semibold mb-4 text-center">Interaction Timeline</h2>
               <div className="flex-1 flex items-center justify-center">
                 {selectedPerson && <TimelineChart person={selectedPerson} />}
