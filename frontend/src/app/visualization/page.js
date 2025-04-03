@@ -205,7 +205,27 @@ const people2 = [
     pos_traits: ["Trust", "Depth", "Loyalty"],
     neg_traits: ["Withdrawn", "Overcautious"],
     keywords: ["stability", "peace"],
-  },
+    interactions: [
+      {
+        date: "2024-01-15",
+        dominantColor: "Blue",
+        wordCount: 150,
+        color_matches: {
+          Yellow: 10,
+          Blue: 60,
+          Red: 20,
+          Green: 10,
+        }
+      }
+    ],
+    stats: {
+      totalInteractions: 1,
+      lastMessage: "2024-01-15",
+      avgWordsPerSession: 150,
+      colorShifts: 0,
+      colorTimeline: "Blue"
+    }
+  }
 ];
 
 const styles = `
@@ -233,9 +253,40 @@ export default function AnimatedTooltipPreview() {
     if (stored) {
       const storedObj = JSON.parse(stored);
       setMemoryData(storedObj);
-      const peopleObj = JSON.parse(storedObj.ai_analysis);
-      console.log(peopleObj);
-      setPeople(peopleObj);
+      try {
+        const peopleObj = JSON.parse(storedObj.ai_analysis);
+        // Add interactions data to any person missing it
+        const updatedPeopleObj = peopleObj.map(person => {
+          if (!person.interactions) {
+            return {
+              ...person,
+              interactions: [
+                {
+                  date: new Date().toISOString().split('T')[0],
+                  dominantColor: person.suggested_color,
+                  wordCount: 150,
+                  color_matches: person.color_matches
+                }
+              ],
+              stats: {
+                totalInteractions: 1,
+                lastMessage: new Date().toISOString().split('T')[0],
+                avgWordsPerSession: 150,
+                colorShifts: 0,
+                colorTimeline: person.suggested_color
+              }
+            };
+          }
+          return person;
+        });
+        console.log("Updated people data:", updatedPeopleObj);
+        setPeople(updatedPeopleObj);
+      } catch (error) {
+        console.error("Error parsing AI analysis:", error);
+        setPeople(people2); // Fallback to people2 if there's an error
+      }
+    } else {
+      setPeople(people2); // Use people2 as fallback
     }
     setIsLoading(false);
   }, []);
