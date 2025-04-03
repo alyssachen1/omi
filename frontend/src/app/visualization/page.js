@@ -250,12 +250,12 @@ export default function AnimatedTooltipPreview() {
         r: 15,
       }),
     },
-    "openness-authority": {
-      xLabel: "Openness",
-      yLabel: "Authority",
+    "proactive-reactive": {
+      xLabel: "Proactive",
+      yLabel: "Reactive",
       computeXY: (person) => ({
-        x: person.color_matches.Blue || 0,
-        y: person.color_matches.Red || 0,
+        x: (person.color_matches.Yellow || 0) + (person.color_matches.Green || 0) * 0.5,
+        y: (person.color_matches.Red || 0) + (person.color_matches.Blue || 0) * 0.3,
         r: 15,
       }),
     },
@@ -536,9 +536,9 @@ export default function AnimatedTooltipPreview() {
                 </button>
                 <button
                   className="px-4 py-2 text-sm font-medium rounded-md bg-white text-black border border-black transition-colors hover:bg-black hover:text-white hover:border-transparent"
-                  onClick={() => setAxisMode("openness-authority")}
+                  onClick={() => setAxisMode("proactive-reactive")}
                 >
-                  Openness vs Authority
+                  Proactive vs Reactive
                 </button>
                 <button
                   className="px-4 py-2 text-sm font-medium rounded-md bg-white text-black border border-black transition-colors hover:bg-black hover:text-white hover:border-transparent"
