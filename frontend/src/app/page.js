@@ -16,21 +16,20 @@ export default function Homepage() {
           Who are you talking to, how can you improve, what should you say?
         </p>
         <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+          {/* 
           <button
             className="px-6 py-2 text-sm font-medium rounded-md bg-black text-white border border-black transition-colors hover:bg-transparent hover:text-black hover:border-black"
           >
             Sync Omi
           </button>
-
+          */}
           <Link href="/memories">
             <button className="px-6 py-2 text-sm font-medium text-black bg-transparent border border-black rounded-md transition-colors hover:bg-black hover:text-white hover:border-transparent">
               Memories
             </button>
           </Link>
-
-
         </div>
       </div>
-    </div >
+    </div>
   );
 }
