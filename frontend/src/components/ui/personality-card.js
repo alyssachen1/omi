@@ -48,25 +48,22 @@ export const PersonalityCard = ({ person }) => {
   const backgroundColor = baseColor.replace('0.5', '0.3');
 
   return (
-    <div
-      className="h-[400px] rounded-lg p-4 shadow-lg overflow-y-auto"
-      style={{
-        backgroundColor: backgroundColor,
-        backdropFilter: 'blur(8px)',
-      }}
-    >
-      <h2 className="text-2xl md:text-3xl font-bold mb-4">
+    <div className="flex flex-col h-full rounded-lg p-4 shadow-lg overflow-y-auto" style={{
+      backgroundColor: backgroundColor,
+      backdropFilter: 'blur(8px)',
+    }}>
+      <h2 className="text-3xl font-bold mb-4">
         {person.name.charAt(0).toUpperCase() + person.name.slice(1)}
       </h2>
 
       {/* Positive Traits */}
-      <div className="mb-2">
-        <h3 className="font-semibold text-md md:text-lg mb-1">Positive Traits</h3>
-        <div className="flex flex-wrap gap-1">
+      <div className="mb-6 flex-grow">
+        <h3 className="mb-3 font-semibold text-lg mb-1">Positive Traits</h3>
+        <div className="flex flex-wrap gap-3">
           {person.pos_traits.map((trait, index) => (
             <span
               key={index}
-              className="px-2 py-1 bg-white/50 rounded-full text-xs md:text-sm transition-colors duration-300 hover:bg-black hover:text-white"
+              className="px-3 py-2 bg-white/50 rounded-full text-sm transition-colors duration-300 hover:bg-black hover:text-white"
             >
               {trait}
             </span>
@@ -75,13 +72,13 @@ export const PersonalityCard = ({ person }) => {
       </div>
 
       {/* Negative Traits */}
-      <div className="mb-2">
-        <h3 className="font-semibold text-md md:text-lg mb-1">Negative Traits</h3>
-        <div className="flex flex-wrap gap-1">
+      <div className="flex-grow">
+        <h3 className="mb-3 font-semibold text-lg mb-1">Negative Traits</h3>
+        <div className="flex flex-wrap gap-3">
           {person.neg_traits.map((trait, index) => (
             <span
               key={index}
-              className="px-2 py-1 bg-white/50 rounded-full text-xs md:text-sm transition-colors duration-300 hover:bg-black hover:text-white"
+              className="px-3 py-2 bg-white/50 rounded-full text-sm transition-colors duration-300 hover:bg-black hover:text-white"
             >
               {trait}
             </span>
@@ -90,8 +87,8 @@ export const PersonalityCard = ({ person }) => {
       </div>
 
       {/* Color Personality */}
-      <div className="mt-4">
-        <h3 className="font-semibold text-md md:text-lg mb-1">Color Personality</h3>
+      <div className="mt-4 flex-grow">
+        <h3 className="font-semibold text-lg mb-1">Color Personality</h3>
         <ColorDescription color={person.suggested_color} />
       </div>
     </div>
