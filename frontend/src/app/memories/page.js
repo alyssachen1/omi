@@ -236,7 +236,6 @@ const TableWithButton = () => {
                   <div className="absolute bottom-10 right-6 flex-shrink-0">
                     {!item.ai_analysis || item.ai_analysis === "{}" ? (
                       <button
-                        disabled
                         onClick={() => handleAnalyze(item)}
                         className="px-6 py-2.5 bg-black text-white border-1 border-black rounded-md transition-all duration-200 ease-in-out hover:bg-white hover:text-black"
                       >
