@@ -115,6 +115,8 @@ const formatTranscript = (text) => {
 const TableWithButton = () => {
   const [items, setItems] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [loadingItemId, setLoadingItemId] = useState(null);
+  const [errorItemId, setErrorItemId] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -127,23 +129,35 @@ const TableWithButton = () => {
   }, []);
 
   const handleAnalyze = async (item) => {
-    const aiResponse = await processWithChatGPT(item.transcript);
-    console.log(aiResponse);
-    const aiThing = aiResponse.speakers || aiResponse;
+    try {
+      setLoadingItemId(item.id);
+      setErrorItemId(null);
 
-    const { error } = await supabase
-      .from("transcripts")
-      .update({ ai_analysis: JSON.stringify(aiThing, null, 2) })
-      .eq("title", item.title);
+      const aiResponse = await processWithChatGPT(item.transcript);
+      console.log(aiResponse);
+      const aiThing = aiResponse.speakers || aiResponse;
 
-    if (!error) {
-      setItems((prev) =>
-        prev.map((i) =>
-          i.title === item.title
-            ? { ...i, ai_analysis: JSON.stringify(aiThing, null, 2) }
-            : i
-        )
-      );
+      const { error } = await supabase
+        .from("transcripts")
+        .update({ ai_analysis: JSON.stringify(aiThing, null, 2) })
+        .eq("title", item.title);
+
+      if (!error) {
+        setItems((prev) =>
+          prev.map((i) =>
+            i.title === item.title
+              ? { ...i, ai_analysis: JSON.stringify(aiThing, null, 2) }
+              : i
+          )
+        );
+      } else {
+        throw error;
+      }
+    } catch (error) {
+      console.error("Error analyzing transcript:", error);
+      setErrorItemId(item.id);
+    } finally {
+      setLoadingItemId(null);
     }
   };
 
@@ -237,9 +251,38 @@ const TableWithButton = () => {
                     {!item.ai_analysis || item.ai_analysis === "{}" ? (
                       <button
                         onClick={() => handleAnalyze(item)}
-                        className="px-6 py-2.5 bg-black text-white border-1 border-black rounded-md transition-all duration-200 ease-in-out hover:bg-white hover:text-black"
+                        className="px-6 py-2.5 bg-black text-white border-1 border-black rounded-md transition-all duration-200 ease-in-out hover:bg-white hover:text-black flex items-center gap-2 min-w-[120px] justify-center"
+                        disabled={loadingItemId === item.id}
                       >
-                        Call MCP
+                        {loadingItemId === item.id ? (
+                          <>
+                            <svg
+                              className="animate-spin h-5 w-5 text-white"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                              ></circle>
+                              <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                              ></path>
+                            </svg>
+                            Processing...
+                          </>
+                        ) : errorItemId === item.id ? (
+                          "Error - Try Again"
+                        ) : (
+                          "Call MCP"
+                        )}
                       </button>
                     ) : (
                       <button
