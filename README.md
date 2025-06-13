@@ -1,5 +1,7 @@
 ![landing](assets/landing.png)
 
+[Check out our Demo Here!](https://devfolio.co/projects/the-color-theory-e6d0)
+
 Color is all about perception– it reflects the way our eyes pick up on a substance our brains subsequently translate those wavelengths into emotions. Just like colors influence how we feel, our interactions with people influence us in distinct, emotional ways.
 
 So what if we could map people to colors?
