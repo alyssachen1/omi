@@ -11,3 +11,5 @@ We built a system that takes in audio transcripts from Omi and inputs it into a 
 Think of a color wheel– certain colors harmonize and complement each other, while others create contrast and dimension. By mapping each person to a color trait, it becomes much easier to not only stay in touch with contacts and relationships we want to maintain, but follow up and develop meaningful relationships based on this data.
 
 Color theory is the study of how colors work together and how they affect our emotions and perceptions. Similarly, we can study how humans behave and interact by representing them as a certain color, or combination of colors. Networking will no longer feel like exchanging telegrams or Linkedins over mundane drinks— it will start to feel like building a color palette of relationships.
+
+[Submission Link](https://devfolio.co/projects/the-color-theory-e6d0)
